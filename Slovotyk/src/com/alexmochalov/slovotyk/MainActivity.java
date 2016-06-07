@@ -582,6 +582,9 @@ public class MainActivity extends Activity
 	}
 
 	 void selectURL(){
+		 DialogURL dialogURL = new DialogURL(this);
+		 dialogURL.show();
+		 /*
 		LayoutInflater factory = LayoutInflater.from(this);
 	    final View dlgView = factory.inflate(R.layout.select_url, null);
 	    final AlertDialog dlg = new AlertDialog.Builder(this).create();
@@ -627,6 +630,7 @@ public class MainActivity extends Activity
 	    });
 
 	    dlg.show();	
+	    */
 	}
 
 	 void dialogSaveFile(final boolean onExit, final boolean fromURL){
