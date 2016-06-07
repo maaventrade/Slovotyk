@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/sky_blue">
+
+	<android.support.v4.view.ViewPager
+		android:id="@+id/viewpager"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"/>
+
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="bottom"
+	    android:gravity="bottom"
+	    android:orientation="vertical" >
+
+		<RadioGroup
+		    android:id="@+id/radiogroup"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center_horizontal"
+		    android:gravity="right"
+		    android:orientation="horizontal" >
+
+		    <RadioButton
+		        android:id="@+id/radioButton1"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:button="@drawable/radio"
+		        android:checked="true" />
+
+		    <RadioButton
+		        android:id="@+id/radioButton2"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:button="@drawable/radio" />
+
+		    <RadioButton
+		        android:id="@+id/radioButton3"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:button="@drawable/radio" />
+
+		    <RadioButton
+		        android:id="@+id/radioButton4"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:button="@drawable/radio" />
+
+		    <RadioButton
+		        android:id="@+id/radioButton5"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:button="@drawable/radio" />
+		</RadioGroup>
+
+		<LinearLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+		    android:gravity="bottom"
+		    android:orientation="horizontal" >
+
+		    <Button
+		        android:id="@+id/imageButtonMail"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="0.5"
+		        android:drawableLeft="@drawable/mail"
+		        android:text="Mail"
+		        android:textColor="@color/salad"
+		        android:textColorHint="@color/salad" />
+
+		    <Button
+		        android:id="@+id/ButtonSample"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="0.5"
+		        android:text="@string/sample"
+		        android:textColor="@color/salad" />
+
+		    <Button
+		        android:id="@+id/ButtonOk"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="right"
+		        android:layout_weight="0.5"
+		        android:text="@string/ok"
+		        android:textColor="@color/salad" />
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+</FrameLayout>
+

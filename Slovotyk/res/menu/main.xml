@@ -1,0 +1,110 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.ww.MainActivity" >
+
+	
+	
+	<item
+        android:id="@+id/action_bookmark"
+        android:orderInCategory="21"
+        android:showAsAction="always"
+        android:icon="@drawable/menu_all_bookmarks"
+        android:title="@string/action_bookmark"/>
+	
+	<item
+        android:id="@+id/action_add_del_bookmark"
+        android:orderInCategory="20"
+        android:showAsAction="always"
+        android:icon="@drawable/menu_bookmark"
+        android:title="@string/action_add_del_bookmark"/>
+
+    
+    <item
+        android:id="@+id/action_clear"
+        android:orderInCategory="23"
+        android:showAsAction="always"
+        android:icon="@drawable/menu_clear"
+        android:title="@string/action_clear"/>
+   
+	<item
+        android:id="@+id/action_refresh"
+        android:orderInCategory="40"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/menu_refresh"
+        android:title="@string/action_refresh" android:visible="false"/>
+	
+	<item
+        android:id="@+id/action_select_dictionary"
+        android:orderInCategory="50"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/menu_folder"
+        android:title="@string/action_select_dictionary" android:visible="false"/>
+	<item
+        android:id="@+id/internal_dictionary"
+        android:orderInCategory="60"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/menu_internal_dict"
+        android:title="@string/internal_dictionary" android:visible="false">
+	<menu> 
+   		<item
+        	android:id="@+id/internal_dictionary_en_ru"
+        	android:orderInCategory="121"
+        	android:showAsAction="never"
+        	android:title="@string/internal_dictionary_en_ru"/>
+    	<item
+        	android:id="@+id/internal_dictionary_sp_en"
+        	android:orderInCategory="122"
+        	android:showAsAction="never"
+        	android:title="@string/internal_dictionary_sp_en"/>
+    </menu>
+	</item>    
+		
+	
+	<item
+        android:id="@+id/item"
+		android:title="menu"
+		android:orderInCategory="999"
+		android:icon="@drawable/menu_submenu"
+		android:showAsAction="always"
+	>	
+	<menu  android:background="@color/sky_blue">	
+		<item
+			android:id="@+id/action_save"
+			android:orderInCategory="24"
+			android:showAsAction="ifRoom"
+			android:icon="@drawable/save"
+			android:title="@string/save"/>
+		
+    <item
+        android:id="@+id/action_open"
+        android:orderInCategory="25"
+        android:showAsAction="never"
+        android:title="@string/action_open"/>
+    <item
+        android:id="@+id/action_open_url"
+        android:orderInCategory="27"
+        android:showAsAction="never"
+        android:title="@string/action_open_url"/>
+	
+	<item
+        android:id="@+id/action_view_dictionary"
+        android:orderInCategory="120"
+        android:showAsAction="never"
+        android:title="@string/action_view_dictionary"/>
+
+    <item
+        android:id="@+id/action_information"
+        android:orderInCategory="140"
+        android:showAsAction="never"
+        android:title="@string/info"/>
+					
+	<item
+		android:id="@+id/information"
+        android:orderInCategory="300"
+        android:showAsAction="never"
+        android:title="@string/information"/>
+			
+	</menu>
+    </item>
+    
+</menu>

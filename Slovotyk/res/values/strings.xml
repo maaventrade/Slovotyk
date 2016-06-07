@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- English -->
+    
+    <string name="app_name">Slovotyk</string>
+    <string name="information">About</string>
+    <string name="action_bookmark">Bookmarks</string>
+    <string name="action_view_dictionary">View dictionary</string>
+	<string name="dialog_save">Save file</string>
+	
+	<string name="dialog_save_message">Text marking was edited. Save it?</string>
+	<string name="yes">Yes</string>
+	<string name="no">No</string>
+	<string name="ok">Ok</string>
+	<string name="sample">Sample</string>
+			<string name="load">Load</string>
+			
+    <string name="action_open">Open file</string>
+    <string name="save">Save file</string>
+    <string name="info">Files information</string>
+    <string name="dictionary_info">Dictionary information</string>
+    <string name="action_open_url">Open URL</string>
+    
+	<string name="exit">Don\'t save</string>
+	<string name="cancel">Cancel</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_clear">Clear</string>
+    	<string name="action_clear_entries">Clear entries</string>
+	<string name="clear_entries_query">Clear entries in the current dictionary?</string>
+
+	<string name="warning_load_text">First, load a text.</string>
+	<string name="warning_no_bookmarks">No bookmarks.</string>
+			
+	<string name="index_not_found">Index not found. Reopen dictionary.</string>
+		
+	<string name="action_select_dictionary">Select dictionary</string>
+	<string name="action_index_dictionary">Reindex dictionary</string>
+
+	<string name="new_bookmark">New bookmark:</string>
+	<string name="clear_bookmarks">Clear bookmarks</string>
+	<string name="action_add_del_bookmark">Add/Delete bookmark</string>
+	
+	<string name="internal_dictionary">Imbedded dictionary (En-Ru)</string>
+	<string name="internal_dictionary_en_ru">English-Russian</string>
+	<string name="internal_dictionary_sp_en">Spanish-English</string>
+		
+    <string name="selectDictionary">Select dictionary.</string>
+									
+    <string name="loading_cancelled">Загрузка прервана. </string>
+    <string name="error_load_zip">Ошибка при загрузке ZIP файла.</string>
+    <string name="error_load_xml">Ошибка при загрузке XML файла.</string>
+    <string name="error_save_file">Ошибка при сохранении XML файла.</string>
+
+    <string name="selections">Selections</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="lexicon">Lexicon</string>
+    
+    <string name="file_saved">File saved.</string>
+
+    <!-- View About -->
+    <string name="info_about">About</string>
+    <string name="info_about1"><![CDATA[
+        	\tApplication <b>Slovotyk</ b> is designed for learning foreign languages ​​(as long as it is destined by the English). <br> 
+        	\tIt uses a technique which I saw in the video of the training club Advance. <br> 
+        	\tYou open the text in a foreign language and read it, marking unfamiliar words (holding your finger horizontally across the screen). 
+        	The program translates the words. The list of this words, together with the translation, you can view in the screen List. After remembering the words, you read the text second time. <br> 
+        	\tCurrent fragment you can mark with bookmarks. <br> 
+        	\tApplication has a built-in dictionary. You can also load another dictionaries in format xdxf.]]></string>
+    
+    <string name="info_loading">Text Loading</string>
+    <string name="info_loading1"><![CDATA[\tThe text can be loaded from the files previously copied to your phone or from the Internet. You can open files in txt, html, xml (eg file saved by this app).<br> 
+        	\tTo download from the web application offers a list of pages.]]></string>
+
+    <string name="info_marking">Markup</string>
+    <string name="info_marking1"><![CDATA[Elements in the Markup toolbar:<br>\t1. Go to the list of selected words;   
+        	<br>\t2. Add/Remove the bookmark on the top line;
+        	<br>\t3. View a list of bookmarks (to go to one of them);
+        	<br>\t4. Clear marks, bookmarks, a List of words;
+        	<br>\t5. It is the bookmark;
+        	<br>\t6. It is the markred word.
+        	]]></string>
+
+    <string name="info_list">List Of Words</string>
+    <string name="info_list1"><![CDATA[Elements in the List Of Words toolbar:<br>\t1. Go to the Markup;   
+        	<br>\t2. Clear marks, bookmarks, a List of words;
+        	<br>\t3. Update translation (for example, after a change of dictionary);
+        	<br>\t4. When you select a row in the list opens the full text dictionary translation.
+        	]]></string>
+
+    <string name="info_dict">Dictionary</string>
+    <string name="info_dict1"><![CDATA[Elements in the Dictionary toolbar:<br>\t1.  Go to the List Of Words;   
+        	<br>\t2. Select external Dictionary;
+        	<br>\t3. Select a built-in dictionary.
+        	]]></string>
+
+    
+    
+</resources>

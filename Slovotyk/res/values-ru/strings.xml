@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Russian -->
+    
+    <string name="app_name">Slovotyk</string>
+    <string name="information">О программе</string>
+    <string name="action_bookmark">Закладки</string>
+    <string name="action_view_dictionary">Словарь</string>
+	<string name="dialog_save">Сохранить файл</string>
+	
+	<string name="dialog_save_message">Разметка текста менялась. Сохранить?</string>
+	<string name="yes">Да</string>
+	<string name="no">Нет</string>
+	<string name="ok">Ok</string>
+	<string name="sample">Пример</string>
+		<string name="load">Загрузить</string>
+	
+    <string name="action_open">Загрузить текст</string>
+    <string name="action_open_url">Загрузить текст из web</string>
+    <string name="save">Сохранить текст</string>
+    <string name="info">Информация о файлах</string>
+    <string name="dictionary_info">Информация о словаре</string>
+    
+
+	<string name="exit">Не сохранять</string>
+	<string name="cancel">Отмена</string>
+    <string name="action_refresh">Обновить</string>
+    <string name="action_clear">Очистить</string>
+    <string name="action_clear_entries">Очистить лексикон</string>
+	<string name="clear_entries_query">Удалить элементы лексикона?</string>
+
+	<string name="warning_load_text">Сначала загрузите текст.</string>
+	<string name="warning_no_bookmarks">Закладок нет.</string>
+			
+	<string name="index_not_found">Индексный файл не найден. Откройте словарь заново.</string>
+		
+	<string name="action_select_dictionary">Открыть словарь</string>
+	<string name="action_index_dictionary">Переиндексировать словарь</string>
+
+	<string name="new_bookmark">Новая закладка:</string>
+	<string name="clear_bookmarks">Удалить закладки</string>
+	<string name="action_add_del_bookmark">Добавить/Удалить закладку</string>
+
+	<string name="internal_dictionary">Встроенный словарь</string>
+	<string name="internal_dictionary_en_ru">Англо-Русский</string>
+	<string name="internal_dictionary_sp_en">Испано-Английский</string>
+
+    <string name="selectDictionary">Выберите словарь.</string>
+												
+    <string name="loading_cancelled">Загрузка прервана.</string>
+    <string name="error_load_zip">Ошибка при загрузке ZIP файла.</string>
+    <string name="error_load_xml">Ошибка при загрузке XML файла.</string>
+    <string name="error_save_file">Ошибка при сохранении XML файла.</string>
+    
+    <string name="selections">Пометки слов</string>
+    <string name="bookmarks">Закладки</string>
+    <string name="lexicon">Лексикон</string>
+    
+    <string name="file_saved">Сохранен файл </string>
+
+    <!-- View About -->
+    <string name="info_about">О приложении</string>
+    <string name="info_about1"><![CDATA[
+        	\tПриложение <b>Slovotyk</b> предназначено для изучения иностранных языков (пока оно заточено под английский).<br> 
+        	\tВ нем используется методика, увиденная мной в ролике тренингового клуба Advance.<br>
+        	\tВы открываете в приложении текст на иностранном языке и читаете его, помечая незнакомые слова (проводя горизонтально по экрану пальцем). 
+        	Программа переводит эти слова. Их список вместе с переводом можно просмотреть на экране Списка слов.
+        	После запоминания этих слов текст читается второй раз. <br>\tДля упрощения работы с текстом текущий отрывок можно выделить закладками.
+        	<br>\tПриложение имеет встроенный словарь В.К. Мюллера. Также можно загрузить словари в формате xdxf.]]></string>
+    
+    <string name="info_loading">Загрузка текста</string>
+    <string name="info_loading1"><![CDATA[\tТекст можно загрузить из файла, предварительно скопированного на телефон или из интернета. Можно открывать файлы txt, html, xml (например файл, сохраненный этим приложением).<br> 
+        	\tДля загрузки из web приложение предлагает список страниц.]]></string>
+
+    <string name="info_marking">Разметка</string>
+    <string name="info_marking1"><![CDATA[Состав тулбара в окне Разметки:<br>\t1. Переход к списку выбранных слов;   
+        	<br>\t2. Добавить/убрать закладку в верхней строке;
+        	<br>\t3. Открыть список закладок (для перехода по ним);
+        	<br>\t4. Очистить пометки, закладки, список слов;
+        	<br>\t5. Так выглядит закладка;
+        	<br>\t6. А так - помеченное слово.
+        	]]></string>
+
+    <string name="info_list">Список слов</string>
+    <string name="info_list1"><![CDATA[Состав тулбара в окне Списка слов:<br>\t1. Возврат в окно Разметки;   
+        	<br>\t2. Очистить пометки, закладки, список слов;
+        	<br>\t3. Обновить перевод (например, после смены словаря);
+        	<br>\t4. При выборе строки списка открывается словарь с полным текстом перевода.
+        	]]></string>
+
+    <string name="info_dict">Словарь</string>
+    <string name="info_dict1"><![CDATA[Состав тулбара в окне Словаря:<br>\t1. Возврат в окно Списка слов;   
+        	<br>\t2. Выбрать внешний словарь;
+        	<br>\t3. Выбрать встроенный словарь.
+        	]]></string>
+
+    
+</resources>
