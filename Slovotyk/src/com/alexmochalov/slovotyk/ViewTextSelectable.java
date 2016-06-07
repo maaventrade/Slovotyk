@@ -36,7 +36,7 @@ import android.widget.*;
  * @author d920maal
  *
  */
-public class ViewTextSelectable extends View {
+public final class ViewTextSelectable extends View {
 	//OnEventListener listener;
 
 	// Copies:  

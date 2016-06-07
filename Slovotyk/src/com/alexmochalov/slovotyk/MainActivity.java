@@ -61,6 +61,7 @@ import com.alexmochalov.files.SelectFile;
  */
 public class MainActivity extends Activity 
 {
+	// Сохраняемые параметры приложения
 	SharedPreferences prefs;
 	static final String PREFS_FILE_NAME = "PREFS_FILE_NAME";
 	static final String PREFS_FIRST_LINE = "PREFS_FIRST_LINE";
@@ -68,18 +69,15 @@ public class MainActivity extends Activity
 	static final String PREFS_INDX_NAME = "PREFS_INDX_NAME";
 	static final String INTERNAL_DICT = "INT_DICT";
 
-	int pageIndex = 0;
-	int prevPageIndex = 0;
+	int pageIndex = 0; // Индекс текущей страницы
+	int prevPageIndex = 0; // Индекс предидущей страницы (для возврата)
 
-	Context context;
-	TextView bodyView;
-
-	 ViewTextSelectable viewTextSelectable;
-	 EntryEditor entryEditor = new EntryEditor(); 
+	ViewTextSelectable viewTextSelectable;
+	EntryEditor entryEditor = new EntryEditor(); 
 	
-	 ArrayList<String> strings = new ArrayList<String>();
+	ArrayList<String> strings = new ArrayList<String>();
 	
-	 String initPath = Utils.EXTERNAL_STORAGE_DIRECTORY;
+	String initPath = Utils.EXTERNAL_STORAGE_DIRECTORY;
 	static final String FILE_EXT[] = {".txt",".xml",".htm",".html",".fb2"};
 	
 	 Menu optionsMenu;
@@ -89,7 +87,6 @@ public class MainActivity extends Activity
     public void onCreate(Bundle savedInstanceState)
 	{
         super.onCreate(savedInstanceState);
-        context = this;
 
         // Настроить вид ActionBar
         Utils.setActionBar(this);
@@ -131,7 +128,8 @@ public class MainActivity extends Activity
 		dictionary_name = prefs.getString(PREFS_DICT_NAME, "eng_ru.xdxf");
 		index_file_name = prefs.getString(PREFS_INDX_NAME, Utils.APP_FOLDER+"/eng_ru.xdxf");
 		
-		dictionary_name = "eng_ru.xdxf";
+		// Пока только один словарь
+		dictionary_name = "eng_ru.xdxf"; 
 		index_file_name = Utils.APP_FOLDER+"/eng_ru.xdxf";
 		
 		Intent intent = getIntent();
@@ -179,6 +177,10 @@ public class MainActivity extends Activity
 		Dictionary.load(dictionary_name, index_file_name);
     }
     
+    /**
+     * 
+     * @param page - номер страницы, которую надо выбрать 
+     */
 	 void selectPage(int page){
 		if (pageIndex == 0)
 			Utils.saveViewParams(viewTextSelectable);
@@ -456,7 +458,7 @@ public class MainActivity extends Activity
 		if (longOperation()) return; 
 			
 		if (viewTextSelectable.getBookmarks().size() == 0){
-			Toast.makeText(context, context.getString(R.string.warning_no_bookmarks), Toast.LENGTH_LONG).show();
+			Toast.makeText(this, this.getString(R.string.warning_no_bookmarks), Toast.LENGTH_LONG).show();
 			return;
 		}
 		
@@ -599,7 +601,7 @@ public class MainActivity extends Activity
     	final EditText URL = (EditText)dlgView.findViewById(R.id.editTextURL);
     	ListView listViewURLs = (ListView)dlgView.findViewById(R.id.listViewURLs); 
     	
-    	ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
+    	ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
     			android.R.layout.simple_list_item_1, URLs);
     	listViewURLs.setAdapter(adapter);
 	    
@@ -682,6 +684,9 @@ public class MainActivity extends Activity
 		prevPageIndex = 0;				
 	}	 
 
+	/**
+	 * Вывести ViewPager с информацией о приложении
+	 */
 	 void information() {
 		pageIndex = 3;
 		getActionBar().hide();
