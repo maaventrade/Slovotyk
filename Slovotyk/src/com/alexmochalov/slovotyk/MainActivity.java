@@ -45,8 +45,9 @@ import com.alexmochalov.bmk.DialogBookmarks;
 import com.alexmochalov.dic.Dictionary;
 import com.alexmochalov.dic.Entry;
 import com.alexmochalov.dic.EntryEditor;
-
 import com.alexmochalov.files.SelectFile;
+import com.alexmochalov.url.DialogURL;
+import com.alexmochalov.url.DialogURL.OnEventListener;
 /**
  * 
  * @author @Alexey Mochalov
@@ -288,11 +289,11 @@ public class MainActivity extends Activity
 		//Utils.setActionbarTitle(Utils.getFileName());
 	}
 
-	 void loadURL(String fileName){
+	 void loadURL(String fileName, String name){
 		DisplayMetrics displaymetrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
 
-		viewTextSelectable.loadURL(displaymetrics.widthPixels, fileName);
+		viewTextSelectable.loadURL(displaymetrics.widthPixels, fileName, name);
 		//Utils.setActionbarTitle(Utils.getFileName());
 	}
 
@@ -583,54 +584,12 @@ public class MainActivity extends Activity
 
 	 void selectURL(){
 		 DialogURL dialogURL = new DialogURL(this);
+		 dialogURL.listener = new OnEventListener(){
+			@Override
+			public void onURLSelected(String url, String name) {
+				loadURL(url, name);
+			}};
 		 dialogURL.show();
-		 /*
-		LayoutInflater factory = LayoutInflater.from(this);
-	    final View dlgView = factory.inflate(R.layout.select_url, null);
-	    final AlertDialog dlg = new AlertDialog.Builder(this).create();
-	    dlg.setTitle("Load from web");
-	    dlg.setView(dlgView);
-	    
-	    String URLs[] = {"http://livesinabox.com/friends/season1/101pilot.htm",
-	    		"http://livesinabox.com/friends/season1/102towsg.htm",
-	    		"http://livesinabox.com/friends/season1/103thumb.htm",
-	    		"http://livesinabox.com/friends/season1/104towgs.htm",
-	    		"http://livesinabox.com/friends/season1/105egld.htm",
-	    		"http://livesinabox.com/friends/season1/106butt.htm",
-	    		"http://livesinabox.com/friends/season1/107towbo.htm",
-	    		"http://lib.ru/POEZIQ/BLAKE/stihi.txt"
-	    		};
-	    
-    	final EditText URL = (EditText)dlgView.findViewById(R.id.editTextURL);
-    	ListView listViewURLs = (ListView)dlgView.findViewById(R.id.listViewURLs); 
-    	
-    	ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-    			android.R.layout.simple_list_item_1, URLs);
-    	listViewURLs.setAdapter(adapter);
-	    
-    	listViewURLs.setOnItemClickListener(new OnItemClickListener(){
-		@Override
-		public void onItemClick(AdapterView<?> adapter, View view, int position,
-				long id) {
-	    	URL.setText((String)adapter.getItemAtPosition(position));
-		}});
-	    
-	    dlgView.findViewById(R.id.buttonLoadURL).setOnClickListener(new OnClickListener() {
-	        @Override
-	        public void onClick(View v) {
-	        	loadURL(URL.getText().toString());
-	        	dlg.dismiss();
-	        }
-	    });
-	    dlgView.findViewById(R.id.buttonCancelURL).setOnClickListener(new OnClickListener() {
-	        @Override
-	        public void onClick(View v) {
-	        	dlg.dismiss();
-	        }
-	    });
-
-	    dlg.show();	
-	    */
 	}
 
 	 void dialogSaveFile(final boolean onExit, final boolean fromURL){

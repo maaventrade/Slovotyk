@@ -58,6 +58,7 @@ public class AsynkLoader {
 
 	// Name of the loading file. 
 	private String name;
+	private String nameDest;
 	
 	private String info = "";
 	
@@ -85,7 +86,7 @@ public class AsynkLoader {
 		myTaskLoading.execute();
 	}
 	
-	public void startURL(Context context, String name, ArrayList<String> strings){
+	public void startURL(Context context, String name,String nameDest, ArrayList<String> strings){
 		progressDialog = new ProgressDialog(context);
 		progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		progressDialog.setTitle("Loading file");
@@ -101,6 +102,7 @@ public class AsynkLoader {
 		progressDialog.show();
 
 		loadFromURL = true;
+		this.nameDest = nameDest;
 		start(context, name, strings, false);
 	}
 
@@ -111,7 +113,7 @@ public class AsynkLoader {
 		protected Void doInBackground(String[] p1)
 		{
 			
-			if (loadFromURL) loadURL(name, strings);
+			if (loadFromURL) loadURL(name, nameDest, strings);
 			else if (name.endsWith(".txt")) loadTXT(name, strings);
 			else if (name.endsWith(".fb2.zip")) loadZIP(name, strings);
 			else if (name.endsWith(".fb2") || name.endsWith(".xml")) loadXML(name, strings);
@@ -132,57 +134,62 @@ public class AsynkLoader {
 				progressDialog.hide();
 				progressDialog.dismiss();
 			}
-			
+
 			Utils.setTextLoading(false);
-			Log.d("", "LOADING CANCELLED --- "+strings.size());
-			
+			Log.d("", "LOADING CANCELLED --- " + strings.size());
+
 		}
-		
-		@Override    
-		protected void onPostExecute(Void result) {      
+
+		@Override
+		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
 
-			if (progressDialog != null){
+			if (progressDialog != null) {
 				progressDialog.hide();
 				progressDialog.dismiss();
 			}
-			
+
 			Utils.setTextLoading(false);
-			
-			Log.d("", "LOADING FINISHED --- "+strings.size());
+
+			Log.d("", "LOADING FINISHED --- " + strings.size());
 
 			Utils.fileName = name;
-			
+
 			if (eventCallback != null)
-				eventCallback.loadingFinishedCallBack(); 	
+				eventCallback.loadingFinishedCallBack();
 		}
-		
+
 		@Override
-	    protected void onProgressUpdate(String... values) {
-	        super.onProgressUpdate(values);
-	       	progressDialog.setMessage(values[0]);
-	      //  progressDialog.setProgress();
-	    }	
-		
-		public String removeTag(String data){
-			StringBuilder regex = new StringBuilder("<script[^>]*>(.*?)</script>");
-			int flags = Pattern.MULTILINE | Pattern.DOTALL| Pattern.CASE_INSENSITIVE;
+		protected void onProgressUpdate(String... values) {
+			super.onProgressUpdate(values);
+			progressDialog.setMessage(values[0]);
+			// progressDialog.setProgress();
+		}
+
+		public String removeTag(String data) {
+			StringBuilder regex = new StringBuilder(
+					"<script[^>]*>(.*?)</script>");
+			int flags = Pattern.MULTILINE | Pattern.DOTALL
+					| Pattern.CASE_INSENSITIVE;
 			Pattern pattern = Pattern.compile(regex.toString(), flags);
 			Matcher matcher = pattern.matcher(data);
 			return matcher.replaceAll("");
 		}
-		
-		public void loadURL(String nameSrc, ArrayList<String> strings){
+
+		public void loadURL(String nameSrc,String nameDest, ArrayList<String> strings){
 			File file = new File(Utils.APP_FOLDER);
 			if(!file.exists()){                          
 				file.mkdirs();                  
 			}
-			String nameDest = nameSrc;
+			//String nameDest = nameSrc;
 			int i = nameDest.lastIndexOf("/");
 			if (i >= 0)
 				nameDest = nameDest.substring(i+1);
 			i = nameDest.lastIndexOf(".");
-			nameDest = nameDest.substring(0, i)+".xml";
+			if (i > 0)
+				nameDest = nameDest.substring(0, i)+".xml";
+			else
+				nameDest = nameDest+".xml";
 			
 			file = new File(Utils.APP_FOLDER+"/"+nameDest);
 			try {
@@ -205,37 +212,47 @@ public class AsynkLoader {
 				  BufferedReader buffreader = new BufferedReader(inputStream);
 
 				  String line;
-
+				  boolean finish = false;
 				  // read every line of the file into the line-variable, on line at the time
 				  i = 1;
 			      this.publishProgress("Read line "+i);
 				  line = buffreader.readLine();
 				  while (line != null){
-					  line = removeTag(line);
-					  //line = Html.fromHtml(line).toString();
-					  	 line = line.replaceAll("</?meta ?[^>]*>","");
-					     line = line.replaceAll("</?font ?[^>]*>","");
-					     line = line.replaceAll("</?font ?[^>]*>","");
-					     line = line.replaceAll("<link ?[^>]*>","");
-					     line = line.replaceAll("<script/script>","");
-					     line = line.replaceAll("<!.*>","");
-					  	 line = line.replaceAll("<head>","");
-					  	 line = line.replaceAll("</head>","");
-					  	 line = line.replaceAll("<html>","");
-					  	 line = line.replaceAll("</html>","");
-					  	 line = line.replaceAll("</?title ?[^>]*>","");
-					  	 line = line.replaceAll("</?a ?[^>]*>","");
-					     
-					     line = line.replaceAll("&amp;"," ");
-					     line = line.replaceAll("&nbsp;"," ");
-					     
-					     if (line.trim().length() > 0){
-					    	 //Log.d("", "->"+line);
-					    	if (line.endsWith("</p>"))
-					    		fileWriter.write(line+"\n");
-					    	else
-					    		fileWriter.write(line+" ");
-					     }
+					  //Log.d("", "->"+line);
+					  if (!line.contains("<img ") && !line.contains("a class="))
+					  {
+						  line = removeTag(line);
+						  //line = Html.fromHtml(line).toString();
+						  	 line = line.replaceAll("</?meta ?[^>]*>","");
+						     line = line.replaceAll("</?font ?[^>]*>","");
+						     line = line.replaceAll("</?font ?[^>]*>","");
+						     line = line.replaceAll("<link ?[^>]*>","");
+						     line = line.replaceAll("<script/script>","");
+						     line = line.replaceAll("<!.*>","");
+						  	 line = line.replaceAll("<head>","");
+						  	 line = line.replaceAll("</head>","");
+						  	 line = line.replaceAll("<html>","");
+						  	 line = line.replaceAll("</html>","");
+						  	 line = line.replaceAll("</?title ?[^>]*>","");
+						  	 line = line.replaceAll("</?a ?[^>]*>","");
+						     
+						     line = line.replaceAll("&amp;"," ");
+						     line = line.replaceAll("&nbsp;"," ");
+						     
+						     line = line.replaceAll("[^\00-\255]","");
+						     
+							 if (line.contains("(function (")) finish = true;
+							 if (!finish){
+							     if (line.trim().length() > 0){
+							    	 //Log.d("", "->"+line);
+							    	if (line.endsWith("</p>"))
+							    		fileWriter.write(line+"\n");
+							    	else
+							    		fileWriter.write(line+" ");
+							     }
+						     
+						     }
+					  }
 					     i++;
 					     this.publishProgress("Read line "+i);
 					     //progressDialog.setProgress(i);

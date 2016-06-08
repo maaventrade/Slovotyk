@@ -671,7 +671,7 @@ Log.d("","X = "+event.getRawX());
 		asynkLoader.start(context, Utils.fileName, strs, fromRresource);
 	}	
 
-	public void loadURL(int width, String fileName) {
+	public void loadURL(int width, String fileName, String name) {
 		this.width = width;
 		final ArrayList<String> strs = new ArrayList<String>(); 
 
@@ -681,7 +681,7 @@ Log.d("","X = "+event.getRawX());
 			public void loadingFinishedCallBack() {
 				divideFile(strs);
 			}};
-		asynkLoader.startURL(context, fileName, strs);
+		asynkLoader.startURL(context, fileName, name, strs);
 	}	
 
 	private void divideFile(ArrayList<String> strs) {
