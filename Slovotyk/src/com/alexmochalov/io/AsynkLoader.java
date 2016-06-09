@@ -176,113 +176,120 @@ public class AsynkLoader {
 			return matcher.replaceAll("");
 		}
 
-		public void loadURL(String nameSrc,String nameDest, ArrayList<String> strings){
+		public void loadURL(String nameSrc, String nameDest,
+				ArrayList<String> strings) {
 			File file = new File(Utils.APP_FOLDER);
-			if(!file.exists()){                          
-				file.mkdirs();                  
+			if (!file.exists()) {
+				file.mkdirs();
 			}
-			//String nameDest = nameSrc;
+			// String nameDest = nameSrc;
 			int i = nameDest.lastIndexOf("/");
 			if (i >= 0)
-				nameDest = nameDest.substring(i+1);
+				nameDest = nameDest.substring(i + 1);
 			i = nameDest.lastIndexOf(".");
 			if (i > 0)
-				nameDest = nameDest.substring(0, i)+".xml";
+				nameDest = nameDest.substring(0, i) + ".xml";
 			else
-				nameDest = nameDest+".xml";
-			
-			file = new File(Utils.APP_FOLDER+"/"+nameDest);
+				nameDest = nameDest + ".xml";
+
+			file = new File(Utils.APP_FOLDER + "/" + nameDest);
 			try {
-				if (isCancelled()) return;
-				
+				if (isCancelled())
+					return;
+
 				URL url = new URL(nameSrc);
-		        
-		        this.publishProgress("Open connection...");
-		        URLConnection urlc = url.openConnection();
-		        this.publishProgress("Create input stream...");
-		        
-		        InputStreamReader inputStream = new InputStreamReader(urlc.getInputStream());
+
+				this.publishProgress("Open connection...");
+				URLConnection urlc = url.openConnection();
+				this.publishProgress("Create input stream...");
+
+				InputStreamReader inputStream = new InputStreamReader(
+						urlc.getInputStream());
 
 				FileWriter fileWriter = new FileWriter(file);
-				BufferedWriter bufferFileWriter  = new BufferedWriter(fileWriter);
-				
+				BufferedWriter bufferFileWriter = new BufferedWriter(fileWriter);
+
 				// if file the available for reading
 				if (inputStream != null) {
-				  // prepare the file for reading
-				  BufferedReader buffreader = new BufferedReader(inputStream);
+					// prepare the file for reading
+					BufferedReader buffreader = new BufferedReader(inputStream);
 
-				  String line;
-				  boolean finish = false;
-				  // read every line of the file into the line-variable, on line at the time
-				  i = 1;
-			      this.publishProgress("Read line "+i);
-				  line = buffreader.readLine();
-				  while (line != null){
-					  //Log.d("", "->"+line);
-					  if (!line.contains("<img ") && !line.contains("a class="))
-					  {
-						  line = removeTag(line);
-						  //line = Html.fromHtml(line).toString();
-						  	 line = line.replaceAll("</?meta ?[^>]*>","");
-						     line = line.replaceAll("</?font ?[^>]*>","");
-						     line = line.replaceAll("</?font ?[^>]*>","");
-						     line = line.replaceAll("<link ?[^>]*>","");
-						     line = line.replaceAll("<script/script>","");
-						     line = line.replaceAll("<!.*>","");
-						  	 line = line.replaceAll("<head>","");
-						  	 line = line.replaceAll("</head>","");
-						  	 line = line.replaceAll("<html>","");
-						  	 line = line.replaceAll("</html>","");
-						  	 line = line.replaceAll("</?title ?[^>]*>","");
-						  	 line = line.replaceAll("</?a ?[^>]*>","");
-						     
-						     line = line.replaceAll("&amp;"," ");
-						     line = line.replaceAll("&nbsp;"," ");
-						     
-						     line = line.replaceAll("[^\00-\255]","");
-						     
-							 if (line.contains("(function (")) finish = true;
-							 if (!finish){
-							     if (line.trim().length() > 0){
-							    	 //Log.d("", "->"+line);
-							    	if (line.endsWith("</p>"))
-							    		fileWriter.write(line+"\n");
-							    	else
-							    		fileWriter.write(line+" ");
-							     }
-						     
-						     }
-					  }
-					     i++;
-					     this.publishProgress("Read line "+i);
-					     //progressDialog.setProgress(i);
-					     
-						 line = buffreader.readLine();
-				  }
-				  
-				  inputStream.close();
-				  bufferFileWriter.flush();
-				  bufferFileWriter.close();
-			      this.publishProgress("File loaded.");
+					String line;
+					boolean finish = false;
+					// read every line of the file into the line-variable, on
+					// line at the time
+					i = 1;
+					this.publishProgress("Read line " + i);
+					line = buffreader.readLine();
+					while (line != null) {
+						if (!line.contains("<img ")
+								&& !line.contains("a class=")) {
+							line = removeTag(line);
+							// line = Html.fromHtml(line).toString();
+							line = line.replaceAll("</?meta ?[^>]*>", "");
+							line = line.replaceAll("</?font ?[^>]*>", "");
+							line = line.replaceAll("</?font ?[^>]*>", "");
+							line = line.replaceAll("<link ?[^>]*>", "");
+							line = line.replaceAll("<script/script>", "");
+							line = line.replaceAll("<!.*>", "");
+							line = line.replaceAll("<head>", "");
+							line = line.replaceAll("</head>", "");
+							line = line.replaceAll("<html>", "");
+							line = line.replaceAll("</html>", "");
+							line = line.replaceAll("</?title ?[^>]*>", "");
+							line = line.replaceAll("</?a ?[^>]*>", "");
+
+							line = line.replaceAll("&amp;", " ");
+							line = line.replaceAll("&nbsp;", " ");
+							line = line.replaceAll("=white>", "=\"white\">");
+							
+
+							line = line.replaceAll("[^\00-\255]", "");
+
+							if (line.contains("(function ("))
+								finish = true;
+							if (!finish) {
+								if (line.trim().length() > 0) {
+									// Log.d("", "->"+line);
+									if (line.endsWith("</p>"))
+										fileWriter.write(line + "\n");
+									else
+										fileWriter.write(line + " ");
+								}
+
+							}
+						}
+						i++;
+						this.publishProgress("Read line " + i);
+						// progressDialog.setProgress(i);
+
+						line = buffreader.readLine();
+					}
+
+					inputStream.close();
+					bufferFileWriter.flush();
+					bufferFileWriter.close();
+					this.publishProgress("File loaded.");
 				}
 			} catch (Exception ex) {
-				info = "Error loading "+" "+ ex.toString();
+				info = "Error loading " + " " + ex.toString();
+				Log.d("", info);
 				return;
 			} finally {
+				Log.d("", "FINISH");
 			}
-			loadXML(Utils.APP_FOLDER+"/"+nameDest, strings);
-			name = Utils.APP_FOLDER+"/"+nameDest;
-		}	
-		
-		public void loadXML(String name, ArrayList<String> strings){
+			Log.d("", "END");
+			loadXML(Utils.APP_FOLDER + "/" + nameDest, strings);
+			name = Utils.APP_FOLDER + "/" + nameDest;
+		}
+
+		public void loadXML(String name, ArrayList<String> strings) {
 			strings.clear();
-			/*try {
-				progressDialog.setMax(Utils.countLines(name));
-			} catch (IOException e) {
-				progressDialog.setMax(0);
-			}
-			progressDialog.setProgress(0);
-			*/
+			/*
+			 * try { progressDialog.setMax(Utils.countLines(name)); } catch
+			 * (IOException e) { progressDialog.setMax(0); }
+			 * progressDialog.setProgress(0);
+			 */
 			try {
 				if (isCancelled()) return;
 				BufferedReader reader;
@@ -336,73 +343,74 @@ public class AsynkLoader {
 				while (eventType != XmlPullParser.END_DOCUMENT) {          
 					if(eventType == XmlPullParser.START_DOCUMENT) {} 
 					else if(eventType == XmlPullParser.START_TAG) {
-						if (parser.getName().equals("sl"));
-							//Log.d("", "START "+parser.getName());
+						if (parser.getName().toLowerCase().equals("sl"));
+Log.d("", "START "+parser.getName());
 						if(parser.getName() == null) {
 							aUp = true;
 							aUp = false;
 						} else {
-							if (parser.getName().equals("section")) section = true;
-							if (parser.getName().equals("title")) title = true;
-							if (parser.getName().equals("up")){
+							if (parser.getName().toLowerCase().equals("section")) section = true;
+							if (parser.getName().toLowerCase().equals("title")) title = true;
+							if (parser.getName().toLowerCase().equals("up")){
 								aUp = true;
 							}
-							if (parser.getName().equals("dn")){
+							if (parser.getName().toLowerCase().equals("dn")){
 								aDn = true;
 							}
-							if (parser.getName().equals("font")){
+							if (parser.getName().toLowerCase().equals("font")){
 								font = true;
 							}
-							if (parser.getName().equals("sl")){
+							if (parser.getName().toLowerCase().equals("sl")){
 								aSel = true;
 							}
-							if (parser.getName().equals("bm")){
+							if (parser.getName().toLowerCase().equals("bm")){
 								aBm = true;
 							}
-							if (parser.getName().equals("b")|| parser.getName().equals("strong")) 
+							if (parser.getName().toLowerCase().equals("b")|| parser.getName().toLowerCase().equals("strong")) 
 								bold = true;
-							if (parser.getName().equals("i")|| parser.getName().equals("emphasis")) 
+							if (parser.getName().toLowerCase().equals("i")|| parser.getName().toLowerCase().equals("emphasis")) 
 								italic = true;
-							if (parser.getName().equals("up_stop")) aUpStop = true;
-							if (parser.getName().equals("dn_stop")) aDnStop = true;
-							if (parser.getName().equals("body")){
+							if (parser.getName().toLowerCase().equals("up_stop")) aUpStop = true;
+							if (parser.getName().toLowerCase().equals("dn_stop")) aDnStop = true;
+							if (parser.getName().toLowerCase().equals("body")){
 								body = true;
 								if (parser.getAttributeValue(null, "name") != null)
 									if (parser.getAttributeValue(null, "name").equals("notes"))
 										body = false;
 							}
-							if (parser.getName().equals("a")) a = true;
+							if (parser.getName().toLowerCase().equals("a")) a = true;
 							} 
 						}					
 					else if(eventType == XmlPullParser.END_TAG) {
-						if (parser.getName().equals("sl"));
-						//Log.d("", "END "+parser.getName());
+						if (parser.getName().toLowerCase().equals("sl"));
+Log.d("", "END "+parser.getName());
 						if(parser.getName() == null) {
 						} else {
-							if (parser.getName().equals("section")) section = false;
-							if (parser.getName().equals("title")) title = false;
-							if (parser.getName().equals("body")) body = false;
-							if (parser.getName().equals("b") || parser.getName().equals("strong")) 
+							if (parser.getName().toLowerCase().equals("section")) section = false;
+							if (parser.getName().toLowerCase().equals("title")) title = false;
+							if (parser.getName().toLowerCase().equals("body")) body = false;
+							if (parser.getName().toLowerCase().equals("b") || parser.getName().toLowerCase().equals("strong")) 
 								noBold = true;
-							if (parser.getName().equals("i")|| parser.getName().equals("emphasis")) 
+							if (parser.getName().toLowerCase().equals("i")|| parser.getName().toLowerCase().equals("emphasis")) 
 								noItalic = true;
-							if (parser.getName().equals("sl")) 
+							if (parser.getName().toLowerCase().equals("sl")) 
 								noSel = true;
-							if (parser.getName().equals("fv") ){
+							if (parser.getName().toLowerCase().equals("fv") ){
 							};
-							if (parser.getName().equals("a")){
+							if (parser.getName().toLowerCase().equals("a")){
 								a = false;
 								aref = true;
 							}
-							if (parser.getName().equals("font")){
+							if (parser.getName().toLowerCase().equals("font")){
 								//font = false;
 							}
 						}
 					}	
 					else if(eventType == XmlPullParser.TEXT) {
+Log.d("", "body "+body+" title "+title+" a "+a);
 						if (body && !title && !a){
 							String S = parser.getText();
-							//Log.d("", "TEXT "+S);
+Log.d("", "TEXT "+S);
 							//if (S.trim().length() != 0){
 							if (S == null); 
 							else if (! S.equals("\n")){
@@ -483,7 +491,7 @@ public class AsynkLoader {
 						
 						try {eventType = parser.next();}
 						catch (XmlPullParserException  e) {
-							//Log.d("",""+e);
+Log.d("",""+e);
 							int i = 1;
 						}
 

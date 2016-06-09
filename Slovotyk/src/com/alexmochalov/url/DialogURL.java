@@ -39,32 +39,20 @@ public class DialogURL extends Dialog {
 	}
 	
 	// что находится на сайте
-	String[] groups = new String[] { "Сериал \"Друзья\"", "Оскар Уайльд" };
+	String[] groups = new String[] { "Оскар Уайльд", "Сериал \"Друзья\"" };
 
 	// названия ссылок на каждом сайте
-	ListItem[] items1 = new ListItem[] { 
-			new ListItem("The One After Joey and Rachel Kiss","http://livesinabox.com/friends/season1/101pilot.htm"),
-			new ListItem("The One Where Ross is Fine","http://livesinabox.com/friends/season1/102towsg.htm"),
-			new ListItem("The One With Ross' Tan","http://livesinabox.com/friends/season1/103thumb.htm"),
-			new ListItem("The One With The Cake","http://livesinabox.com/friends/season1/104towgs.htm"),
-			new ListItem("The One Where Rachel's Sister Babysits","http://livesinabox.com/friends/season1/105egld.htm"),
-			new ListItem("The One With Ross' Grant","http://livesinabox.com/friends/season1/106butt.htm"),
-			new ListItem("The One With The Home Study","http://livesinabox.com/friends/season1/107towbo.htm")};
-	/*
-			new ListItem("The One With The Late Thanksgiving",""),
-			new ListItem("The One With The Birth Mother",""),
-			new ListItem("The One Where Chandler Gets Caught",""),
-			new ListItem("The One Where the Stripper Cries",""),			
-			new ListItem("The One With Phoebe's Wedding",""),
-			new ListItem("The One Where Joey Speaks French",""),
-			new ListItem("The One With Princess Consuela",""),
-			new ListItem("The One Where Estelle Dies",""),
-			new ListItem("The One With Rachel's Going Away Party",""),
-			new ListItem("The Last One (1)",""),
-			new ListItem("The Last One (2)","")};
-	*/
-			
 	ListItem[] items2 = new ListItem[] { 
+			new ListItem("The One Where Monica Gets a New Roommate","http://friends.tktv.net/Episodes1/summaries/1.html"),
+			new ListItem("The One with the Sonogram at the End","http://friends.tktv.net/Episodes1/summaries/2.html"),
+			new ListItem("The One With the Thumb","http://friends.tktv.net/Episodes1/summaries/3.html"),
+			new ListItem("The One With George Stephanopoulos","http://friends.tktv.net/Episodes1/4.html"),
+			new ListItem("The One with the East German Laundry Detergent","http://friends.tktv.net/Episodes1/5.html"),
+			new ListItem("The One with the Butt","http://friends.tktv.net/Episodes1/6.html"),
+			new ListItem("The One with the Blackout","http://friends.tktv.net/Episodes1/7.html"),
+			new ListItem("The One Where Nana Dies Twice","http://friends.tktv.net/Episodes1/8.html")};
+	
+	ListItem[] items1 = new ListItem[] { 
 			new ListItem("The Picture of Dorian Gray", "http://oscar-wilde.ru/english/portret-doriana-greya-na-angliyskom-yazyke.html"),
 			new ListItem("The Canterville Ghost", "http://oscar-wilde.ru/english/the-canterville-ghost-na-angliyskom-yazyke-kentervilskoe-prividenie.html"),
 			new ListItem("The Happy Prince", "http://oscar-wilde.ru/english/the-happy-prince-na-angliyskom-yazyke-schastlivyy-prints.html"),
