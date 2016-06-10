@@ -50,7 +50,7 @@ public class AsynkDivider
 	public void start(ArrayList<String> source, ArrayList<String> dest, int width, Paint paint, Context context){
 		dest.clear();
 		this.source = source;
-		this.dest = dest;
+	 	this.dest = dest;
 		this.width = width;
 		this.paint = paint;
 		this.context = context;

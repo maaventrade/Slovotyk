@@ -223,18 +223,6 @@ public final class Utils {
 	public static void setActionbarTitle(CharSequence charSequence, boolean displayHome){
 		actionBar.setDisplayHomeAsUpEnabled(displayHome);
 		actionBar.setDisplayShowHomeEnabled(!displayHome);
-		//actionBar.setDisplayShowTitleEnabled(false);
-		/*
-		if (charSequence.length() == 0)
-			actionBar.setDisplayShowTitleEnabled(false);
-		else {
-			actionBar.setDisplayShowTitleEnabled(true);
-			actionBar.setTitle(charSequence);
-		}
-		*/
-		//if (charSequence.length() != 0)
-		//actionBar.setTitle(charSequence);
-		
 	}
 	
 	public static void setViewInformation() {

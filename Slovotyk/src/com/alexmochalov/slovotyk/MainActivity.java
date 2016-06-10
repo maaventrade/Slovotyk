@@ -69,6 +69,7 @@ public class MainActivity extends Activity
 	static final String PREFS_DICT_NAME = "PREFS_DICT_NAME";
 	static final String PREFS_INDX_NAME = "PREFS_INDX_NAME";
 	static final String INTERNAL_DICT = "INT_DICT";
+	static final String INIT_PATH = "INIT_PATH";
 
 	int pageIndex = 0; // Индекс текущей страницы
 	int prevPageIndex = 0; // Индекс предидущей страницы (для возврата)
@@ -128,6 +129,7 @@ public class MainActivity extends Activity
 
 		dictionary_name = prefs.getString(PREFS_DICT_NAME, "eng_ru.xdxf");
 		index_file_name = prefs.getString(PREFS_INDX_NAME, Utils.APP_FOLDER+"/eng_ru.xdxf");
+		initPath = prefs.getString(INIT_PATH, Utils.EXTERNAL_STORAGE_DIRECTORY);
 		
 		// Пока только один словарь
 		dictionary_name = "eng_ru.xdxf"; 
@@ -234,11 +236,12 @@ public class MainActivity extends Activity
 			optionsMenu.findItem(R.id.internal_dictionary).setVisible(false);
 			
 			Utils.setActionbarTitle(Utils.getDictionaryName(), true);
-	    	int upId = Resources.getSystem().getIdentifier("up", "id", "android");
+	    	/*int upId = Resources.getSystem().getIdentifier("up", "id", "android");
 	    	if (upId > 0) {
 	    	    ImageView up = (ImageView) findViewById(upId);
-	    	    //up.setImageResource(R.drawable.home);
-	    	}    	
+	    	    up.setImageResource(R.drawable.up);
+	    	}  
+	    	*/
 			Utils.restoreViewParams();
 		} else if (page == 2){
 			setContentView(R.layout.dictionary_entry);
@@ -256,13 +259,13 @@ public class MainActivity extends Activity
 			optionsMenu.findItem(R.id.internal_dictionary).setVisible(true);
 			
 			Utils.setActionbarTitle(Utils.getDictionaryName(), true);
-
+			/*
 	    	int upId = Resources.getSystem().getIdentifier("up", "id", "android");
 	    	if (upId > 0) {
 	    	    ImageView up = (ImageView) findViewById(upId);
-	    	    //up.setImageResource(R.drawable.home);
+	    	    up.setImageResource(R.drawable.up);
 	    	}    	
-	    	
+	    	*/
 		}
     }
 
@@ -452,7 +455,7 @@ public class MainActivity extends Activity
 			    dlgAlert.create().show();
 			    break;
 		} 
-		return true;
+  		return true;
 	}
 
 	 void dialogBookmarks() {
@@ -537,6 +540,9 @@ public class MainActivity extends Activity
 		if (resultCode==RESULT_OK){
 			if (requestCode == 0){
 				Utils.fileName = data.getStringExtra("returnedData");
+				if (Utils.fileName.lastIndexOf("/") >= 0)
+					initPath = Utils.fileName.substring(0, Utils.fileName.lastIndexOf("/"));
+				
 				loadFile(Utils.fileName, false);
 			} else if (requestCode == 1){
 				// Get a name of the Dictionary file
@@ -567,6 +573,7 @@ public class MainActivity extends Activity
 
 		editor.putString(PREFS_DICT_NAME, Utils.dictionary_name);
 		editor.putString(PREFS_INDX_NAME, Utils.index_file_name);
+		editor.putString(INIT_PATH, initPath);
 		editor.putString(INTERNAL_DICT, Utils.getInternalDictionary());
 		
 		
