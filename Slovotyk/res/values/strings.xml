@@ -25,6 +25,7 @@
 	<string name="cancel">Cancel</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_clear">Clear</string>
+	<string name="action_instant">Show translation</string>
     	<string name="action_clear_entries">Clear entries</string>
 	<string name="clear_entries_query">Clear entries in the current dictionary?</string>
 
@@ -43,6 +44,7 @@
 	<string name="internal_dictionary">Imbedded dictionary (En-Ru)</string>
 	<string name="internal_dictionary_en_ru">English-Russian</string>
 	<string name="internal_dictionary_sp_en">Spanish-English</string>
+	<string name="internal_dictionary_it_ru">Italian-Russian</string>
 		
     <string name="selectDictionary">Select dictionary.</string>
 									

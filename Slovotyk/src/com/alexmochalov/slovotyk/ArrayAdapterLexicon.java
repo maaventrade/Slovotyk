@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.widget.*;
 
 /**
  * 
@@ -42,7 +43,7 @@ public class ArrayAdapterLexicon extends ArrayAdapter<Entry>{
 			convertView = inflater.inflate(R.layout.entry, null);
 		}
 
-		Entry entry = values.get(position);
+		final Entry entry = values.get(position);
 
 		TextView text = (TextView)convertView.findViewById(R.id.text);
 		text.setText(entry.getText());
@@ -59,6 +60,16 @@ public class ArrayAdapterLexicon extends ArrayAdapter<Entry>{
 
 		text1.setText(Html.fromHtml(entry.getSample()));
 
+		
+		ImageButton imageButton = (ImageButton)convertView.findViewById(R.id.entryImageButtonSpeak);
+		imageButton.setOnClickListener(new ImageButton.OnClickListener(){
+				@Override
+				public void onClick(View p1)
+				{
+					TtsUtils.speak(entry.getText());
+				}
+			});
+			
 		return convertView;
 	}
 

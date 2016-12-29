@@ -42,6 +42,12 @@ public class ArrayAdapterDictionary  extends ArrayAdapter<IndexEntry>
 		Log.d("", "values----> "+values.size());
 	}
 
+	public void reset(ArrayList<IndexEntry> values)
+	{
+		this.valuesAll = (ArrayList<IndexEntry>) values.clone();
+		
+	}
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) { 
@@ -69,7 +75,7 @@ public class ArrayAdapterDictionary  extends ArrayAdapter<IndexEntry>
 	{
 		//@Override 
 		public String convertResultToString(Object resultValue) {
-			return ((IndexEntry)resultValue).getName();
+			return ((IndexEntry)resultValue).getText();
 		}
 		
 		@Override 
@@ -77,7 +83,7 @@ public class ArrayAdapterDictionary  extends ArrayAdapter<IndexEntry>
 			if(constraint != null) {
                 suggestions.clear();
                 for (IndexEntry customer : valuesAll) {
-                    if(customer.getName().toLowerCase().startsWith(constraint.toString().toLowerCase())){
+                    if(customer.getText().toLowerCase().startsWith(constraint.toString().toLowerCase())){
                         suggestions.add(customer);
                     }
                 }

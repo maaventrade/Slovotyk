@@ -56,7 +56,13 @@
         	android:orderInCategory="122"
         	android:showAsAction="never"
         	android:title="@string/internal_dictionary_sp_en"/>
-    </menu>
+		<item
+        	android:id="@+id/internal_dictionary_it_ru"
+        	android:orderInCategory="123"
+        	android:showAsAction="never"
+        	android:title="@string/internal_dictionary_it_ru"/>
+		
+	</menu>
 	</item>    
 		
 	
@@ -97,7 +103,13 @@
         android:orderInCategory="140"
         android:showAsAction="never"
         android:title="@string/info"/>
-					
+	
+		<item
+			android:id="@+id/action_instant"
+			android:orderInCategory="150"
+			android:showAsAction="never"
+			
+			android:title="@string/action_instant"/>
 	<item
 		android:id="@+id/information"
         android:orderInCategory="300"

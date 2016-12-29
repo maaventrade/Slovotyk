@@ -212,6 +212,6 @@ public class Entry
 	}
 	
 	public void refresh() {
-		setTranslationAndPhonetic(Dictionary.find(text), text);
+		//setTranslationAndPhonetic(Dictionary.find(text), text);
 	}
 }

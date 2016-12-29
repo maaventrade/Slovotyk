@@ -47,8 +47,6 @@ public final class Utils {
 	static String EXTERNAL_STORAGE_DIRECTORY = Environment.getExternalStorageDirectory().getPath();
 	public static String fileName = "";
 
-	public static String dictionary_name = "";
-	public static String dictionary_index = "";
 
 	private static int internalDictionaryID = 0;
 	private static String internalDictionary = "";
@@ -59,7 +57,37 @@ public final class Utils {
 	private static int firstLinePixelShift = -1;
 	private static int firstPosition = -1;
 	
-	public static String index_file_name = "";
+	private static String mDictionary_file_name = "";
+	private static String mIndex_file_name = "";
+	private static String mLanguage = "";
+	
+	public static boolean instant_translation;
+
+	public static String getSampleFileName()
+	{
+		if (mLanguage.equals("eng")){
+		fileName = "salinger.txt";
+		}
+		else if (mLanguage.equals("spa")){
+		fileName = "noname.txt";
+		}
+		else if (mLanguage.equals("ita")){
+		fileName = "intrigo.txt";
+		}
+		else
+			fileName = "noname.txt";
+		return fileName;
+	}
+
+	public static void setDictionaryFileName(String mDictionaryName)
+	{
+		mDictionary_file_name = mDictionaryName;
+	}
+
+	public static void setIndexFileName(String mIndexFileName)
+	{
+		mIndex_file_name = mIndexFileName;
+	}
 
 	public static void restoreViewParams(Object object)
 	{
@@ -98,7 +126,7 @@ public final class Utils {
 		return file.getAbsolutePath() + "/";
 	}
 
-	public static CharSequence getFileName() {
+	public static String getFileName() {
 		if (fileName.length() == 0) return "No text";
 		int i = fileName.lastIndexOf("/");
 		if (i > 0)
@@ -113,35 +141,50 @@ public final class Utils {
 		else
 			return fileName;
 	}
-
+	
+	public static String getaLanguage() {
+		return mLanguage;
+	}
+	
+	
+/*
 	public static CharSequence getDictionaryPath() {
 		String name = "";
 		if (internalDictionaryID != 0)
 			name = "Internal: ";
-		if (dictionary_name.length() == 0)
+		if (mDictionary_file_name.length() == 0)
 			return "No dictionary";
 		else
-			return name+dictionary_name;
+			return name+mDictionary_file_name;
 	}
 
-	public static CharSequence getIndexPath() {
-		if (index_file_name.length() == 0)
+	public static String getIndexPath() {
+		if (mIndex_file_name.length() == 0)
 			return "No index opened";
 		else
-			return index_file_name;
+			return mIndex_file_name;
 	}
+*/
+	public static String getDictionaryFileName() {
+		return mDictionary_file_name;
+	}
+	
 
-	public static CharSequence getDictionaryName() {
-		if (dictionary_name.length() == 0)
+	public static String getIndexFileName() {
+		return mIndex_file_name;
+	}
+	
+	public static String getDictionaryFileNameStr() {
+		if (mDictionary_file_name.length() == 0)
 			return "No dictionary";
 		String name = "";
 		if (internalDictionaryID != 0)
 			name = "Internal: ";
-		int i = dictionary_name.lastIndexOf("/");
+		int i = mDictionary_file_name.lastIndexOf("/");
 		if (i > 0)
-			return name+dictionary_name.substring(i+1);
+			return name+mDictionary_file_name.substring(i+1);
 		else
-			return name+dictionary_name;
+			return name+mDictionary_file_name;
 	}
 	
 	public static void setInformation(String info){
@@ -220,9 +263,11 @@ public final class Utils {
 		activity = activity_;
 	}
 
-	public static void setActionbarTitle(CharSequence charSequence, boolean displayHome){
+	public static void setActionbarTitle(String title, String subtitle, boolean displayHome){
 		actionBar.setDisplayHomeAsUpEnabled(displayHome);
 		actionBar.setDisplayShowHomeEnabled(!displayHome);
+		actionBar.setTitle(title);
+		actionBar.setSubtitle(subtitle);
 	}
 	
 	public static void setViewInformation() {
@@ -261,12 +306,21 @@ public final class Utils {
 
 	public static void setInternalDictionary(String name) {
 		internalDictionary = name;
-		if (name.equals("eng_ru.xdxf"))  
+		if (name.equals("eng_ru.xdxf")){
+			mLanguage = "eng";
 			internalDictionaryID = R.raw.eng_ru;
-		else if (name.equals("span_eng.xdxf"))
+		}
+		else if (name.equals("span_eng.xdxf")){
+			mLanguage = "spa";
 			internalDictionaryID = R.raw.span_eng;
+		}
+		else if (name.equals("it_ru.xdxf")){
+			mLanguage = "ita";
+			internalDictionaryID = R.raw.it_ru;
+		}
 		else
 			internalDictionaryID = 0;
+			
 	}
 
 	public static boolean isInternalDictionary() {
@@ -320,17 +374,41 @@ public final class Utils {
 	
 	
 	public static String[] getStringForms(String string){
-		String[] strings = {string, string, string};
-		if (string.endsWith("ied"))
-			strings[1] = string.replace("ied","y");
-		else
+		if (mLanguage.equals("ita")){
+			String[] strings = {string};
+			if (string.endsWith("mi"))
+				string = string.substring(0,string.length()-2);
+				
+			string = string.replace("ò", "o");
+				
+			if (string.endsWith("amo"))
+				strings[0] = string.substring(0,string.length()-3) + "are";
+			else if (string.endsWith("ate"))
+				strings[0] = string.substring(0,string.length()-3) + "are";
+			else if (string.endsWith("ano"))
+				strings[0] = string.substring(0,string.length()-3) + "are";
+			else if (string.endsWith("o"))
+				strings[0] = string.substring(0,string.length()-1) + "are";
+			else if (string.endsWith("a"))
+				strings[0] = string.substring(0,string.length()-1) + "are";
+			else if (string.endsWith("e"))
+				strings[0] = string.substring(0,string.length()-1) + "are";
+			return strings;
+		} else {
+			String[] strings = {string, string, string};
+			if (string.endsWith("ied"))
+				strings[1] = string.replace("ied","y");
+			else
 			if (strings[0].endsWith("d"))
 				strings[0] = strings[0].substring(0, string.length()-1);
-		else 
+			else 
 			if (string.endsWith("ing") && string.length() > 3)
 				strings[2] = string.substring(0, string.length()-3)+"e";
+			return strings;
+		}
+			
 		
-		return strings;
+	
 	}
 
 	

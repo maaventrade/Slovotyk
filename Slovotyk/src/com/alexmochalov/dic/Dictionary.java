@@ -65,6 +65,9 @@ public final class Dictionary{
 		mIndexFileName = index_file_name;
 		mDictionaryName = dictionary_name;
 
+		//Log.d("s","Start Loading "+dictionary_name);
+		//Log.d("s",index_file_name);
+		
 		File file = new File(index_file_name);
 		
 		if(!file.exists()){
@@ -122,8 +125,8 @@ public final class Dictionary{
 			progressDialog.hide();
 			progressDialog.dismiss();
 			
-			Utils.index_file_name = mIndexFileName;
-			Utils.dictionary_name = mDictionaryName;
+			Utils.setIndexFileName(mIndexFileName);
+			Utils.setDictionaryFileName(mDictionaryName);
 			
 			Utils.setInformation(info);
 			
@@ -140,13 +143,15 @@ public final class Dictionary{
 			BufferedReader reader;
 
 			ens.clear();
-			
+		//Log.d("s","LOAD "+mIndexFileName);
 			try {
 				reader = new BufferedReader(new InputStreamReader(new FileInputStream(mIndexFileName)));
 
 				String line = reader.readLine();
 				while (line != null){
-					ens.add(new IndexEntry(line));
+					IndexEntry indexEntry = new IndexEntry(line);
+					if (indexEntry.getText().length() > 0)
+						ens.add(indexEntry);
 					line = reader.readLine();
 				    if (isCancelled()){
 						reader.close();
@@ -157,28 +162,49 @@ public final class Dictionary{
 				reader.close();
 			} catch (IOException t) {
 				info = "Error loading <"+mDictionaryName+"> loaded. "+t.toString();
+				//Log.d("s", info);
 			}
 			parsing = false;
-			Log.d("OK", "OK");
+			//Log.d("s", "OK");
 		}
 		
 	}	
 	
-	public static String find(String string) {
+	public static IndexEntry find(String string) {
 		ArrayList<IndexEntry> results = new ArrayList<IndexEntry>();
 		string = string.toLowerCase();
 
 		String[] strings = Utils.getStringForms(string);
-
+//
+int n = 0;
 		for (IndexEntry indexEntry: indexEntries){
 			if (indexEntry.text == null)
 				continue;
+				
+			if (string.charAt(0) > indexEntry.text.charAt(0))
+				continue;
+			if (string.charAt(0) < indexEntry.text.charAt(0)){
+				//Log.d("z", string.charAt(0) +" - "+ indexEntry.text.charAt(0));
+				break;
+			}
+			
 			String text = indexEntry.text.replace("-", "");
-
-			if (string.equals(text))
-				return readTranslation(indexEntry);
+	n++;
+			if (string.equals(text)){
+				
+				return indexEntry;
+			}
+				
+			if (strings.length == 1){
+				
+				if (strings[0].equals(text)){
+				
+					results.add(indexEntry);
+				}
+			}
+				
 			else if (strings[1].equals(text))
-				return readTranslation(indexEntry);
+				return indexEntry;
 			else if (string.startsWith(text) && string.length() - text.length() > 2)
 				results.add(indexEntry);
 			else if (strings[0].startsWith(text))
@@ -186,13 +212,15 @@ public final class Dictionary{
 			else if (strings[2].equals(text))
 				results.add(indexEntry);
 		}
+	
+		Log.d("z", "n "+n);
 		if (results.size() > 0)
-			return readTranslation(results.get(results.size()-1));
-		else return "";
+			return results.get(results.size()-1);
+		else return null;
 	}
 	
 	/**
-	 * Reads bytes from the Dictionary file
+	 * Reads bytes from the Dictionary fileget
 	 * @param indexEntry - gives the position and length of translation in the file   
 	 * @return the translation as String
 	 */
@@ -203,7 +231,7 @@ public final class Dictionary{
 			if (Utils.isInternalDictionary())
 				bis = new BufferedInputStream(mContext.getResources().openRawResource(Utils.getInternalDictionaryID()));
 			else
-				bis = new BufferedInputStream(new FileInputStream(Utils.dictionary_name));
+				bis = new BufferedInputStream(new FileInputStream(Utils.getDictionaryFileName()));
 
 			//bis.skip(1000);
 			//byte[] buffer = new byte[500];
@@ -230,14 +258,24 @@ public final class Dictionary{
 	}
 
 	static final int BUFFER_SYZE = 2048;
-	public static boolean createIndexAsinc(String name) {
+	public static boolean createIndexAsinc(String dictionary_name) {
+		
+		String index_file_name;
+		if (Utils.isInternalDictionary())
+			index_file_name= Utils.APP_FOLDER+"/"+dictionary_name.replace(".xdxf", ".index");
+		else	
+			index_file_name= dictionary_name.replace(".xdxf", ".index");
+
+		mIndexFileName = index_file_name;
+		mDictionaryName = dictionary_name;
+		
 		progressDialog = new ProgressDialog(mContext);
 		progressDialog.setTitle("Indexing dictionary...");
-		progressDialog.setMessage(name);
+		progressDialog.setMessage(index_file_name);
 		progressDialog.show();
 		
 		myTaskIndexing = new MyTaskIndexing();    
-		myTaskIndexing.execute(name);
+		myTaskIndexing.execute(index_file_name);
 		return true;
 	}	
 		
@@ -245,7 +283,7 @@ public final class Dictionary{
 
 		@Override
 		protected Void doInBackground(String... params) {
-			createIndex(params[0]);
+			createIndex();
 			return null;
 		}
 		
@@ -266,26 +304,19 @@ public final class Dictionary{
 			progressDialog.hide();
 			progressDialog.dismiss();
 			Utils.setInformation(info);
-			//Log.d("","eventCallback --->>>>> "+eventCallback);
-			if (eventCallback != null)
-				//Log.d("","INDEXING FINISHED");
-//				private String mDictionaryName;
-//			private String mIndexFileName;
+			Log.d("","eventCallback --->>>>> "+eventCallback);
+			if (eventCallback != null){
 				eventCallback.indexingFinishedCallBack(mDictionaryName, mIndexFileName);
+				}
 		}
 	}	
 	
-	public static boolean createIndex(String name) {
+	public static boolean createIndex() {
 		ArrayList<IndexEntry> indexEntries = new ArrayList<IndexEntry>();
 		
 		BufferedInputStream bis;
 		BufferedOutputStream bos;
 		
-		String index;
-		if (Utils.isInternalDictionary())
-			index= Utils.APP_FOLDER+"/"+name.replace(".xdxf", ".index");
-		else	
-			index= name.replace(".xdxf", ".index");
 		
 		String chunk;
 		String chunk0 = "";
@@ -297,9 +328,9 @@ public final class Dictionary{
 			if (Utils.isInternalDictionary())
 				bis = new BufferedInputStream(mContext.getResources().openRawResource(Utils.getInternalDictionaryID()));
 			else
-				bis = new BufferedInputStream(new FileInputStream(name));
+				bis = new BufferedInputStream(new FileInputStream(mDictionaryName));
 			
-			bos = new BufferedOutputStream(new FileOutputStream(index));
+			bos = new BufferedOutputStream(new FileOutputStream(mIndexFileName));
 			
 			int state = 0;
 			int start = 0;
@@ -347,7 +378,7 @@ public final class Dictionary{
 					case 5:
 						if (buffer[i] == '>'){
 						    chunk = new String(buffer, start, end-start);
-						    if ((chunk0+chunk).length() > 0
+						    if ((chunk0+chunk).trim().length() > 0
 						    &&  !chunk.startsWith("  ")){
 							    indexEntries.add(new IndexEntry((chunk0+chunk).trim(), pos+1, prevTextEnd));
 							    chunk0 = "";
@@ -398,10 +429,10 @@ public final class Dictionary{
 			bos.flush();
 			bos.close();
 			
-			Utils.dictionary_name = name;
-			Utils.dictionary_index = index;
+			//Utils.dictionary_name = name;
+			//Utils.dictionary_index = index;
 			
-			info = "Create index <"+index+">. "+indexEntries.size()+" entries.";
+			info = "Create index <"+mIndexFileName+">. "+indexEntries.size()+" entries.";
 			return true;
 		} catch (IOException t) {
 			info = "Error indexing "+t;
@@ -450,7 +481,7 @@ public final class Dictionary{
 				if (Utils.isInternalDictionary())
 					reader = new BufferedReader(new InputStreamReader(mContext.getResources().openRawResource(Utils.getInternalDictionaryID())));
 				else
-					reader = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.dictionary_name)));
+					reader = new BufferedReader(new InputStreamReader(new FileInputStream(Utils.getDictionaryFileName())));
 				
 				String line = reader.readLine();
 				int i = 0;

@@ -26,6 +26,7 @@
 	<string name="cancel">Отмена</string>
     <string name="action_refresh">Обновить</string>
     <string name="action_clear">Очистить</string>
+	<string name="action_instant">Показывать перевод</string>
     <string name="action_clear_entries">Очистить лексикон</string>
 	<string name="clear_entries_query">Удалить элементы лексикона?</string>
 
@@ -44,7 +45,8 @@
 	<string name="internal_dictionary">Встроенный словарь</string>
 	<string name="internal_dictionary_en_ru">Англо-Русский</string>
 	<string name="internal_dictionary_sp_en">Испано-Английский</string>
-
+	<string name="internal_dictionary_it_ru">Итальянско-Русский</string>
+	
     <string name="selectDictionary">Выберите словарь.</string>
 												
     <string name="loading_cancelled">Загрузка прервана.</string>

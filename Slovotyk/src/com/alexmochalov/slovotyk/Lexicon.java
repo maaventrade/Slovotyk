@@ -1,21 +1,13 @@
 package com.alexmochalov.slovotyk;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-
-import com.alexmochalov.dic.Dictionary;
-import com.alexmochalov.dic.Entry;
-import com.alexmochalov.dic.EntryLatin;
-import com.alexmochalov.io.AsynkLoader;
-import com.alexmochalov.io.FileSaver;
-
-import android.app.Activity;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.app.*;
+import android.util.*;
+import android.view.*;
+import android.widget.*;
+import android.widget.AdapterView.*;
+import com.alexmochalov.dic.*;
+import com.alexmochalov.io.*;
+import java.util.*;
 
 public final class Lexicon {
 	private static Activity mContext;
@@ -25,10 +17,10 @@ public final class Lexicon {
 	private static ListView listView;
 	private static ArrayAdapterLexicon adapter;
 
-	static EventCallback eventCallback;
+	static EventCallback mCallback;
 
 	interface EventCallback { 
-		void itemSelected(Entry entry); 
+		void itemSelected(Entry entry);
 	}
 	
 	public static void setParams(Activity activity){
@@ -90,15 +82,17 @@ public final class Lexicon {
 		adapter = new ArrayAdapterLexicon(mContext,
 									  R.layout.entry, entryes);
 	   listView.setAdapter(adapter);
-
+		Log.d("z","setAdapter "+mCallback);
 	    listView.setOnItemClickListener(new OnItemClickListener(){
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 										int position, long id) {
-					
-					if (eventCallback != null)
-						eventCallback.itemSelected(entryes.get(position));
+					Log.d("z","mCallback "+mCallback);
+					if (mCallback != null)
+						mCallback.itemSelected(entryes.get(position));
 				}});
+				
+		
 	}
 
 
@@ -136,8 +130,10 @@ public final class Lexicon {
 	
 	public static void addEntries(Entry entry, String text,
 			String translation, String sentence, String[] nextTwoWords) {
+		Log.d("z","nextTwoWords "+nextTwoWords.length);
 		
 		String[] strings = Utils.getStringForms(text);
+		Log.d("z","strings "+strings.length);
 		
 		ArrayList<EntryLatin> e = entry.getEntryLatin();
 		for (int j = 0; j < e.size(); j++){
@@ -149,7 +145,8 @@ public final class Lexicon {
 				addEntry(s0, e.get(j).getTranslation(), sentence);
 				continue;
 			}	
-			for (int i = 0; i < 2; i++){
+			
+			for (int i = 0; i < strings.length; i++){
 				String s = (strings[i]+" "+nextTwoWords[0]+" "+nextTwoWords[1]).trim();
 				if (textLatin.contains(s))
 					addEntry(s0, e.get(j).getTranslation(), sentence);
@@ -161,7 +158,7 @@ public final class Lexicon {
 				addEntry(s0, e.get(j).getTranslation(), sentence);
 				continue;
 			}	
-			for (int i = 0; i < 2; i++){
+			for (int i = 0; i < strings.length; i++){
 				String s = (strings[i]+" "+nextTwoWords[0]).trim();
 				if (textLatin.contains(s))
 					addEntry(s0, e.get(j).getTranslation(), sentence);

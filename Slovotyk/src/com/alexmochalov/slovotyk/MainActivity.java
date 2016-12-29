@@ -1,53 +1,33 @@
 package com.alexmochalov.slovotyk;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import android.annotation.*;
+import android.app.*;
+import android.content.*;
+import android.content.SharedPreferences.*;
+import android.content.res.*;
+import android.graphics.*;
+import android.net.*;
+import android.os.*;
+import android.preference.*;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.OnInitListener;
+import android.support.v4.view.*;
+import android.text.*;
+import android.util.*;
+import android.view.*;
+import android.view.View.*;
+import android.widget.*;
+import android.widget.RadioGroup.*;
+import com.alexmochalov.bmk.*;
+import com.alexmochalov.dic.*;
+import com.alexmochalov.files.*;
+import com.alexmochalov.url.*;
+import com.alexmochalov.url.DialogURL.*;
+import java.io.*;
+import java.util.*;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.content.pm.ActivityInfo;
-import android.content.res.Resources;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.view.ViewPager;
-import android.text.Html;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.alexmochalov.bmk.DialogBookmarks;
 import com.alexmochalov.dic.Dictionary;
-import com.alexmochalov.dic.Entry;
-import com.alexmochalov.dic.EntryEditor;
-import com.alexmochalov.files.SelectFile;
-import com.alexmochalov.url.DialogURL;
-import com.alexmochalov.url.DialogURL.OnEventListener;
 /**
  * 
  * @author @Alexey Mochalov
@@ -60,7 +40,7 @@ import com.alexmochalov.url.DialogURL.OnEventListener;
  * Также можно загрузить словари в формате xdxf. 
  * 
  */
-public class MainActivity extends Activity 
+public class MainActivity extends Activity  implements OnInitListener
 {
 	// Сохраняемые параметры приложения
 	SharedPreferences prefs;
@@ -70,6 +50,7 @@ public class MainActivity extends Activity
 	static final String PREFS_INDX_NAME = "PREFS_INDX_NAME";
 	static final String INTERNAL_DICT = "INT_DICT";
 	static final String INIT_PATH = "INIT_PATH";
+	static final String INSTANT_TRANSLATION = "INSTANT_TRANSLATION";
 
 	int pageIndex = 0; // Индекс текущей страницы
 	int prevPageIndex = 0; // Индекс предидущей страницы (для возврата)
@@ -84,6 +65,15 @@ public class MainActivity extends Activity
 	
 	 Menu optionsMenu;
 	
+	String dictionary_name;
+	String index_file_name;
+	
+
+	private int MY_DATA_CHECK_CODE = 90;
+	
+	
+	private MenuItem item_instant;
+	 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -103,10 +93,12 @@ public class MainActivity extends Activity
     	}
     	*/
     	
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		//setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		
 		// Настройка объекта Lexicon
-		Lexicon.eventCallback = new Lexicon.EventCallback(){
+		Lexicon.mCallback = new Lexicon.EventCallback(){
+
+			
 			@Override
 			public void itemSelected(Entry entry) {
 				// При выборе элемента списка переходим на страницу словаря 
@@ -122,18 +114,19 @@ public class MainActivity extends Activity
 		
 		prefs =  PreferenceManager.getDefaultSharedPreferences(this);
 
-		String dictionary_name;
-		String index_file_name;
+		
 		
 		Utils.setInternalDictionary(prefs.getString(INTERNAL_DICT, "eng_ru.xdxf"));
 
 		dictionary_name = prefs.getString(PREFS_DICT_NAME, "eng_ru.xdxf");
 		index_file_name = prefs.getString(PREFS_INDX_NAME, Utils.APP_FOLDER+"/eng_ru.xdxf");
 		initPath = prefs.getString(INIT_PATH, Utils.EXTERNAL_STORAGE_DIRECTORY);
+		//Log.d("z","dictionary_name "+dictionary_name);
+		Utils.instant_translation = prefs.getBoolean(INSTANT_TRANSLATION, false);
 		
 		// Пока только один словарь
-		dictionary_name = "eng_ru.xdxf"; 
-		index_file_name = Utils.APP_FOLDER+"/eng_ru.xdxf";
+		//dictionary_name = "eng_ru.xdxf"; 
+		//index_file_name = Utils.APP_FOLDER+"/eng_ru.xdxf";
 		
 		Intent intent = getIntent();
 	    String action = intent.getAction();
@@ -167,8 +160,19 @@ public class MainActivity extends Activity
 			@Override
 			public void loadingFinishedCallBack()
 			{
-				if (pageIndex > 0);
-					//Utils.setActionbarTitle(Utils.getDictionaryName());
+				dictionary_name = Utils.getDictionaryFileName();
+				index_file_name = Utils.getIndexFileName();
+				
+			//Log.d("z","dic loaded "+dictionary_name);
+			//for (int i = 0; i<10;i++)
+			//	Log.d("s", ""+Dictionary.getIndexEntries().get(i).getName());
+				entryEditor.reset();
+				
+				if (pageIndex > 0)
+					Utils.setActionbarTitle(Utils.getaLanguage(),
+						Utils.getDictionaryFileName(), true);
+				else Utils.setActionbarTitle(Utils.getaLanguage(),
+											 Utils.getFileName(), false);
 			}
 
 			@Override
@@ -178,8 +182,38 @@ public class MainActivity extends Activity
 		};
 		Dictionary.setParams(this);
 		Dictionary.load(dictionary_name, index_file_name);
+		
+
+		Intent checkIntent = new Intent();
+		checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+		startActivityForResult(checkIntent, MY_DATA_CHECK_CODE);
+		
     }
     
+	
+@Override
+	public void onInit(int status) {
+		if (status == TextToSpeech.SUCCESS) {
+			
+			TtsUtils.init(getApplicationContext());
+			
+
+		}
+		else if (status == TextToSpeech.ERROR) {
+			Toast.makeText(this, "Error occurred while initializing Text-To-Speech engine", Toast.LENGTH_LONG).show();
+		}
+	}
+	
+
+	@Override 
+	protected void onDestroy() {
+		TtsUtils.destroy();
+		
+		//saveParameters();
+		super.onDestroy(); 
+	}
+	
+	
     /**
      * 
      * @param page - номер страницы, которую надо выбрать 
@@ -199,11 +233,14 @@ public class MainActivity extends Activity
 	    	    ImageView up = (ImageView) findViewById(upId);
 	    	   // up.setImageResource(R.drawable.logo);
 	    	}    	
-			Utils.setActionbarTitle(Utils.getFileName(), false);
+			Utils.setActionbarTitle(Utils.getaLanguage(),
+				Utils.getFileName(), false);
 			//Utils.setActionbarTitle("");
 			
 			viewTextSelectable = (ViewTextSelectable)findViewById(R.id.viewTextSelectable);
-
+			
+	//		 android:screenOrientation="nosensor" 
+	//		 android:configChanges="keyboardHidden|orientation" 
 			SeekBarVertical seekBarVertical = (SeekBarVertical)findViewById(R.id.SeekBarVertical);
 			viewTextSelectable.setParams(this, strings, seekBarVertical);
 			
@@ -235,7 +272,8 @@ public class MainActivity extends Activity
 			optionsMenu.findItem(R.id.action_select_dictionary).setVisible(false);
 			optionsMenu.findItem(R.id.internal_dictionary).setVisible(false);
 			
-			Utils.setActionbarTitle(Utils.getDictionaryName(), true);
+			Utils.setActionbarTitle(Utils.getaLanguage(),
+				Utils.getDictionaryFileName(), true);
 	    	/*int upId = Resources.getSystem().getIdentifier("up", "id", "android");
 	    	if (upId > 0) {
 	    	    ImageView up = (ImageView) findViewById(upId);
@@ -258,7 +296,8 @@ public class MainActivity extends Activity
 			optionsMenu.findItem(R.id.action_select_dictionary).setVisible(true);
 			optionsMenu.findItem(R.id.internal_dictionary).setVisible(true);
 			
-			Utils.setActionbarTitle(Utils.getDictionaryName(), true);
+			Utils.setActionbarTitle(Utils.getaLanguage(),
+				Utils.getDictionaryFileName(), true);
 			/*
 	    	int upId = Resources.getSystem().getIdentifier("up", "id", "android");
 	    	if (upId > 0) {
@@ -313,6 +352,9 @@ public class MainActivity extends Activity
 		getMenuInflater().inflate(R.menu.main, menu);
 		optionsMenu = menu;
 		
+		item_instant = menu.findItem(R.id.action_instant);
+		item_instant.setCheckable(true);
+		item_instant.setChecked(Utils.instant_translation);
 		//setGUI(0);
     	//ab.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#0099ff")));
 		
@@ -436,16 +478,37 @@ public class MainActivity extends Activity
 				else
 					Dictionary.load(fileName, indexFileName);
 				break;
+			case R.id.internal_dictionary_it_ru: 
+				dictionary_name = "it_ru.xdxf";
+				index_file_name = Utils.APP_FOLDER+"/"+dictionary_name;/// replace to .index !!!
+				
+				Utils.setInternalDictionary("it_ru.xdxf");
+				// Try to find the Index file
+				file = new File(index_file_name);
+				if(!file.exists()){
+				// If Index file not found create the Index file 
+					//Log.d("s","Start indexing=== "+index_file_name);
+					Dictionary.createIndexAsinc(dictionary_name);
+					}
+				else {
+					
+					Dictionary.load(dictionary_name, index_file_name);
+				}
+				break;
 			case R.id.information:
 				information();
+				break;
+			case R.id.action_instant:
+				Utils.instant_translation = !Utils.instant_translation;
+				item_instant.setChecked(Utils.instant_translation);
 				break;
 			case R.id.action_information:
 				AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
 			    dlgAlert.setTitle(getResources().getString(R.string.info));              
 				
 			    dlgAlert.setMessage(Utils.getFilePath()+"\n"+
-					    		Utils.getDictionaryPath()+"\n"+
-		    					Utils.getIndexPath()+"\n"+
+					    		Utils.getDictionaryFileNameStr()+"\n"+
+		    					Utils.getIndexFileName()+"\n"+
 		    					Dictionary.getCount()+" entries."+"\n"+
 		    					Dictionary.getDictionaryInfo()
 			    		);
@@ -494,7 +557,7 @@ public class MainActivity extends Activity
 		String file_ext[] = {".xdxf"};
 		intent.putExtra("initPath",initPath);
   		intent.putExtra("fileExt", file_ext); 
-  		intent.putExtra("addInfo", Utils.getDictionaryName()); 
+  		intent.putExtra("addInfo", Utils.getDictionaryFileName()); 
   		intent.putExtra("message", message); 
   		startActivityForResult(intent, 1);
 	}
@@ -537,6 +600,21 @@ public class MainActivity extends Activity
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		
+		if (requestCode == MY_DATA_CHECK_CODE) {
+			if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
+				TtsUtils.newTts(this);
+				
+			} else {
+				Intent installIntent = new Intent();
+				installIntent
+					.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
+				startActivity(installIntent);
+			}
+			return;
+		} else
+			super.onActivityResult(requestCode, resultCode, data);
+		
 		if (resultCode==RESULT_OK){
 			if (requestCode == 0){
 				Utils.fileName = data.getStringExtra("returnedData");
@@ -571,12 +649,12 @@ public class MainActivity extends Activity
 		editor.putString(PREFS_FILE_NAME, Utils.fileName);
 		editor.putInt(PREFS_FIRST_LINE, viewTextSelectable.getFirstLine());
 
-		editor.putString(PREFS_DICT_NAME, Utils.dictionary_name);
-		editor.putString(PREFS_INDX_NAME, Utils.index_file_name);
+		editor.putString(PREFS_DICT_NAME, Utils.getDictionaryFileName());
+		editor.putString(PREFS_INDX_NAME, Utils.getIndexFileName());
 		editor.putString(INIT_PATH, initPath);
 		editor.putString(INTERNAL_DICT, Utils.getInternalDictionary());
 		
-		
+		editor.putBoolean(INSTANT_TRANSLATION, Utils.instant_translation);
 		editor.apply();
 
     }
@@ -766,9 +844,8 @@ public class MainActivity extends Activity
 			public void onClick(View v) {
 				// Close the informational window and load sample file
 				onBackPressed();
-				Utils.fileName = "salinger.txt";
 				// Start loading the text 
-				loadFile(Utils.fileName, true);
+				loadFile(Utils.getSampleFileName(), true);
 				 
 			}
         });

@@ -1,26 +1,30 @@
 package com.alexmochalov.dic;
 
 import android.app.*;
-import android.content.*;
 import android.text.*;
-import android.text.method.ScrollingMovementMethod;
+import android.text.method.*;
+import android.util.*;
 import android.view.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
-
+import com.alexmochalov.slovotyk.*;
 import java.util.*;
 
-import com.alexmochalov.slovotyk.R;
-import com.alexmochalov.slovotyk.R.id;
-import com.alexmochalov.slovotyk.R.layout;
-
 public class EntryEditor {
+	ArrayAdapterDictionary adapter;
 	AutoCompleteTextView text = null;
 	TextView phonetic;
 	TextView translation;
 	
 	Activity activity;
 	Entry entry = null;
+
+	
+	public void reset()
+	{
+		if (adapter != null)
+			adapter.reset(Dictionary.getIndexEntries());
+	}
 	
 	public void setGUI(Activity activity) {
 		this.activity = activity;
@@ -34,9 +38,9 @@ public class EntryEditor {
 			entry_ = new Entry();
 		this.entry = entry_;
 			
-		final ArrayAdapterDictionary adapter = new ArrayAdapterDictionary(activity, 
-															R.layout.dic_string, 
-															(ArrayList<IndexEntry>)Dictionary.getIndexEntries().clone());
+		adapter = new ArrayAdapterDictionary(activity, 
+											R.layout.dic_string, 
+										(ArrayList<IndexEntry>)Dictionary.getIndexEntries().clone());
         text.setAdapter(adapter);
 		
 		text.setOnItemClickListener(new OnItemClickListener(){

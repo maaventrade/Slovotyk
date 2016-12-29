@@ -582,10 +582,15 @@ Log.d("",""+e);
 				else
 					reader = new BufferedReader(new InputStreamReader(openFileInputStream(name), "windows-1251"));
 				
+				reader = new BufferedReader(new InputStreamReader(openFileInputStream(name), "UTF-8"));
+					
 				String line = reader.readLine();
 				while (line != null){
 					if (isCancelled()) return;
 					strings.add(line);
+					//if (strings.size()<9)
+						//Log.d("z",strings.get(strings.size()-1));
+						
 					line = reader.readLine();
 				}
 				

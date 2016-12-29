@@ -1,6 +1,9 @@
 package com.alexmochalov.dic;
 
-public class IndexEntry {
+import android.util.*;
+
+public class IndexEntry
+ {
 	String text;
 	int pos;
 	int length;
@@ -10,6 +13,8 @@ public class IndexEntry {
 		this.text = text;
 		this.pos = pos;
 		this.length = 0;
+		
+
 	}
 
 	IndexEntry(String text, int pos, int length){
@@ -17,6 +22,7 @@ public class IndexEntry {
 		this.text = text;
 		this.pos = pos;
 		this.length = length;
+		
 	}
 
 	IndexEntry(String text){
@@ -38,13 +44,9 @@ public class IndexEntry {
 		} catch(StringIndexOutOfBoundsException e){
 			int xxx = 1;
 		}
-
-
 	}
 
-	public String getName()
-	{
-		// TODO: Implement this method
+	public String getText(){
 		return text;
 	}
 }

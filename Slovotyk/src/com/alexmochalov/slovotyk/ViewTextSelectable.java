@@ -30,6 +30,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.*;
+import com.alexmochalov.dic.*;
 
 /**
  * 
@@ -274,18 +275,37 @@ Log.d("","X = "+event.getRawX());
         	if (selectionLine >= 0){
         		if (Math.abs(Y-yDn) <= Math.abs(X-xDn)){
         			int line = selection();
-        			String translation = getTranslation(text);
-        			String sentence = getSentence(line);
-        			
-        			Entry entry = Lexicon.addEntry(text, 
-        					translation, 
-        					sentence);
-        			if (translation.length() > 0){
-        				String[] nextTwoWords = nextTwoWords(line);
-        				Lexicon.addEntries(entry, text, translation, sentence, nextTwoWords); 
-        			}
-        			
-        			Utils.modified = true;
+					
+        			IndexEntry indexEntry = Dictionary.find(text);
+					String translation = "";
+					String sentence = "";
+					if (indexEntry != null){
+						translation = Dictionary.readTranslation(indexEntry);
+						sentence = getSentence(line);
+						if (!text.equals(indexEntry.getText()))
+							text = text + " (" + indexEntry.getText() + ")";
+					} 
+					
+					if (Utils.instant_translation){
+						DialogEntry dialodEntry = new DialogEntry(context,
+																  new Entry(text, translation, sentence));
+						dialodEntry.show();
+
+						clearTempSelection();
+						tempSelectiom(X, Y);
+					} else {
+						Entry entry = Lexicon.addEntry(text, 
+													   translation, 
+													   sentence);
+						if (translation.length() > 0){
+							String[] nextTwoWords = nextTwoWords(line);
+							Lexicon.addEntries(entry, text, translation, sentence, nextTwoWords); 
+						}
+
+						Utils.modified = true;
+						
+					}
+					
         		} else
                 	clearTempSelection();
         			
@@ -573,6 +593,7 @@ Log.d("","X = "+event.getRawX());
 		//drawSelectedBackground(firstLine, canvas, y);
 									
 		for (int i = firstLine; i< strings.size(); i++){
+			
 			paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
 			String s = strings.get(i);
 			if (s.length() == 0)
@@ -666,6 +687,7 @@ Log.d("","X = "+event.getRawX());
 		asynkLoader.eventCallback = new AsynkLoader.EventCallback(){
 			@Override
 			public void loadingFinishedCallBack() {
+				
 				divideFile(strs);
 			}};
 		asynkLoader.start(context, Utils.fileName, strs, fromRresource);
@@ -787,12 +809,12 @@ Log.d("","X = "+event.getRawX());
 		
 		return z;
 	}
-	
-	private String getTranslation(String text)
+	/*
+	private  getTranslation(String text)
 	{
 		return Dictionary.find(text);
 	}
-	
+	*/
 
 	public int getFirstLine() {
 		return firstLine;
