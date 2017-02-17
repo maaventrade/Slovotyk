@@ -54,7 +54,7 @@ public class SeekBarVertical extends ImageView {
 
 	private void setPaint(){
 		paint.setStrokeWidth(1);
-		paint.setColor(getResources().getColor(R.color.sky_blue));
+		//paint.setColor(context.getResources().getColor(R.color.sky_blue));
 		paint.setAlpha(100);
 	}
 
@@ -114,6 +114,9 @@ public class SeekBarVertical extends ImageView {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
+		if (isInEditMode()) {
+			return;
+		}
 	    if (max == 0) return;
 	    canvas.drawRect(new Rect(W, progress*height/max-H/2, W*2, H/2+progress*height/max), paint);
 

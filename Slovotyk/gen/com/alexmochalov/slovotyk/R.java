@@ -42,6 +42,7 @@ public final class R {
          would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
     
  Default screen margins, per the Android Design guidelines. 
+ Default screen margins, per the Android Design guidelines. 
 
          Example customization of dimensions originally defined in res/values/dimens.xml
          (such as screen margins) for screens with more than 820dp of available width. This
@@ -51,6 +52,9 @@ public final class R {
         public static final int activity_horizontal_margin=0x7f060000;
         public static final int activity_vertical_margin=0x7f060001;
         public static final int information=0x7f060003;
+        public static final int text_size_large=0x7f060004;
+        public static final int text_size_medium=0x7f060005;
+        public static final int text_size_small=0x7f060006;
     }
     public static final class drawable {
         public static final int bg1=0x7f020000;
@@ -127,7 +131,7 @@ public final class R {
         public static final int editTextEntry=0x7f0b000b;
         public static final int editTextName=0x7f0b002d;
         public static final int editTextURL=0x7f0b0026;
-        public static final int entryImageButtonSpeak=0x7f0b000f;
+        public static final int entryImageButtonSpeak=0x7f0b0010;
         public static final int expandableListOfURLs=0x7f0b0027;
         public static final int icon=0x7f0b0024;
         public static final int imageButtonMail=0x7f0b0021;
@@ -140,7 +144,7 @@ public final class R {
         public static final int italic=0x7f0b0041;
         public static final int item=0x7f0b0039;
         public static final int nonSwipeableViewPager=0x7f0b0000;
-        public static final int phonetic=0x7f0b0010;
+        public static final int phonetic=0x7f0b000f;
         public static final int phoneticEntry=0x7f0b000c;
         public static final int radioButton1=0x7f0b001c;
         public static final int radioButton2=0x7f0b001d;
@@ -292,6 +296,12 @@ public final class R {
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
         
+
+        Base application theme for API 14+. This theme completely replaces
+        AppBaseTheme from BOTH res/values/styles.xml and
+        res/values-v11/styles.xml on API 14+ devices.
+    
+ API 14 theme customizations can go here. 
          */
         public static final int AppBaseTheme=0x7f080000;
         /**  Application theme. 

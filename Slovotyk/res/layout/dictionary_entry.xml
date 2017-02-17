@@ -14,17 +14,19 @@
             android:layout_height="wrap_content"
             android:text="Text:"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/blue" />
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_size_medium" />
 
-        <AutoCompleteTextView 
+        <AutoCompleteTextView
             android:id="@+id/editTextEntry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-			android:singleLine="true"
-    		android:lines="1"
-    		android:maxLines="1"            
             android:layout_weight="1"
-            android:ems="10" >
+            android:ems="10"
+            android:lines="1"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="@dimen/text_size_medium" >
 
             <requestFocus />
         </AutoCompleteTextView >
@@ -35,15 +37,16 @@
         android:id="@+id/phoneticEntry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="@dimen/text_size_medium" />
 
     <TextView
         android:id="@+id/translationEntry"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/bg2"
-        
         android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="@dimen/text_size_medium" />
     
 </LinearLayout>

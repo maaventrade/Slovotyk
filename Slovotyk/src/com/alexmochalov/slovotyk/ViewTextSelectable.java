@@ -15,6 +15,7 @@ import com.alexmochalov.io.FileSaver;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -27,9 +28,11 @@ import android.graphics.Typeface;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.*;
+
 import com.alexmochalov.dic.*;
 
 /**
@@ -37,7 +40,7 @@ import com.alexmochalov.dic.*;
  * @author d920maal
  *
  */
-public final class ViewTextSelectable extends View {
+public final class ViewTextSelectable extends TextView {
 	//OnEventListener listener;
 
 	// Copies:  
@@ -60,7 +63,7 @@ public final class ViewTextSelectable extends View {
 	// Height of strings = paint.getTextSize() 
 	private int heightOfString;
 	// Default text height 
-	private float textSize = 36;
+	//private float textSize = 36;
 	// Picture to draw the bookmarks
 	private Bitmap bitmapBookMark;
 	private Rect rectBitmapBookMark;
@@ -170,8 +173,9 @@ public final class ViewTextSelectable extends View {
 	/**
 	 * Sets parameters of the Paint objects and depended parameters
 	 */
-	public void setPaints() {
-		paint.setTextSize(textSize);
+	public void setPaints(int textSize) {
+
+		paint.setTextSize( textSize );
 		paint.setStrokeWidth(1);
 		
 		heightOfString = (int) paint.getTextSize()+((int)paint.getTextSize()>>1);
@@ -187,7 +191,7 @@ public final class ViewTextSelectable extends View {
 	 * @param strings
 	 * @param seekBarVertical
 	 */
-	void setParams(Context context, ArrayList<String> strings, SeekBarVertical seekBarVertical) {
+	void setParams(Context context, ArrayList<String> strings, SeekBarVertical seekBarVertical, int textSize) {
 		this.context = context;
 		this.strings = strings;
 		this.seekBarVertical = seekBarVertical;
@@ -210,7 +214,7 @@ public final class ViewTextSelectable extends View {
 		bitmapBookMark = BitmapFactory.decodeResource(res, R.drawable.bookmark1);
 		rectBitmapBookMark = new Rect(0,0,bitmapBookMark.getWidth(), bitmapBookMark.getHeight());
 		
-		setPaints();
+		setPaints(textSize);
 	}
 	
 	public ViewTextSelectable(Context context, AttributeSet attrs, int defStyle) {
@@ -577,6 +581,10 @@ Log.d("","X = "+event.getRawX());
 	
 	@Override
 	protected void onDraw (Canvas canvas){
+		if (isInEditMode()) {
+			return;
+		}
+
 		if (strings.size() == 0) return;
 
 		////////////////////////////////////////////////

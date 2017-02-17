@@ -6,11 +6,12 @@
 	android:orientation="vertical">
 
 	<TextView
-		android:layout_height="wrap_content"
-		android:text="Medium Text"
-		android:textAppearance="?android:attr/textAppearanceMedium"
-		android:layout_width="wrap_content"
-		android:id="@+id/dicstringTextView"/>
+	    android:id="@+id/dicstringTextView"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="Medium Text"
+	    android:textAppearance="?android:attr/textAppearanceMedium"
+	    android:textSize="@dimen/text_size_medium" />
 
 </LinearLayout>
 

@@ -242,7 +242,11 @@ public class MainActivity extends Activity  implements OnInitListener
 	//		 android:screenOrientation="nosensor" 
 	//		 android:configChanges="keyboardHidden|orientation" 
 			SeekBarVertical seekBarVertical = (SeekBarVertical)findViewById(R.id.SeekBarVertical);
-			viewTextSelectable.setParams(this, strings, seekBarVertical);
+			//TextView textView = (TextView)findViewById(R.id.textView);
+			
+			int size = getResources().getDimensionPixelSize(R.dimen.text_size_medium);
+			
+			viewTextSelectable.setParams(this, strings, seekBarVertical, size);
 			
 			Utils.restoreViewParams(viewTextSelectable);
 			
@@ -496,6 +500,8 @@ public class MainActivity extends Activity  implements OnInitListener
 				}
 				break;
 			case R.id.information:
+				//TextView textView = (TextView)findViewById(R.id.textView);
+				
 				information();
 				break;
 			case R.id.action_instant:
