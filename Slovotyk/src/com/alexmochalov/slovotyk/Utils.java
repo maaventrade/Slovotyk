@@ -63,6 +63,8 @@ public final class Utils {
 	
 	public static boolean instant_translation;
 
+	public static String info = "";
+	
 	public static String getSampleFileName()
 	{
 		if (mLanguage.equals("eng")){

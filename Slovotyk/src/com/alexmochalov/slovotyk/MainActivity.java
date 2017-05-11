@@ -18,15 +18,18 @@ import android.view.*;
 import android.view.View.*;
 import android.widget.*;
 import android.widget.RadioGroup.*;
+
 import com.alexmochalov.bmk.*;
 import com.alexmochalov.dic.*;
 import com.alexmochalov.files.*;
 import com.alexmochalov.url.*;
 import com.alexmochalov.url.DialogURL.*;
+
 import java.io.*;
 import java.util.*;
 
 import android.view.View.OnClickListener;
+
 import com.alexmochalov.dic.Dictionary;
 /**
  * 
@@ -150,7 +153,10 @@ public class MainActivity extends Activity  implements OnInitListener
 			
 			if (Utils.fileName.length() > 0){
 				// Start loading the text 
-				loadFile(Utils.fileName, false);
+				loadFile(Utils.APP_FOLDER + "/" + Utils.fileName, false);
+				//if (Utils.info.length() > 0)
+				//	Toast.makeText(this, Utils.info, Toast.LENGTH_LONG).show();
+				
 				Utils.saveViewParams(prefs.getInt(PREFS_FIRST_LINE, 0), 999);
 			} else
 				information();		

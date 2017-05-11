@@ -698,7 +698,7 @@ Log.d("","X = "+event.getRawX());
 				Log.d("a","loaded "+strs.size());
 				divideFile(strs);
 			}};
-		asynkLoader.start(context, Utils.fileName, strs, fromRresource);
+		asynkLoader.start(context, fileName, strs, fromRresource);
 	}	
 
 	public void loadURL(int width, String fileName, String name) {

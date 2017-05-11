@@ -36,6 +36,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * 
@@ -49,7 +50,7 @@ public class AsynkLoader {
 	// 
 	private MyTaskLoading myTaskLoading;
 
-	private Context context;
+	private Context mContext;
 	// This method is called when procedure finished.
 	public EventCallback eventCallback;
 	
@@ -59,8 +60,6 @@ public class AsynkLoader {
 	// Name of the loading file. 
 	private String name;
 	private String nameDest;
-	
-	private String info = "";
 	
 	private boolean loadFromURL = false;
 	
@@ -72,11 +71,11 @@ public class AsynkLoader {
 	
 	public AsynkLoader(Context context){
 		super();
-        this.context = context;
+        mContext = context;
 	}
 	
 	public void start(Context context, String name, ArrayList<String> strings, boolean fromRresource){
-        this.context = context;
+        mContext = context;
         this.name = name;
         this.strings = strings;
         this.fromRresource = fromRresource;
@@ -272,8 +271,7 @@ public class AsynkLoader {
 					this.publishProgress("File loaded.");
 				}
 			} catch (Exception ex) {
-				info = "Error loading " + " " + ex.toString();
-				Log.d("", info);
+				Utils.info = "Error loading " + " " + ex.toString();
 				return;
 			} finally {
 				Log.d("", "FINISH");
@@ -502,9 +500,9 @@ Log.d("",""+e);
 						//publishProgress
 						//eventType = parser.next();         
 				}         
-				info = "File <"+name+"> loaded. "+strings.size()+" strings.";
+				Utils.info = "File <"+name+"> loaded. "+strings.size()+" strings.";
 			} catch (Throwable t) {
-				info = context.getResources().getString(R.string.error_load_xml)+". "+t.toString();
+				Utils.info = mContext.getResources().getString(R.string.error_load_xml)+". "+t.toString();
 			}
 		}
 
@@ -540,14 +538,14 @@ Log.d("",""+e);
 				zin.close();
 				loadXML(nameUnzipped, strings);
 			} catch (Exception t) {
-				info = context.getResources().getString(R.string.error_load_zip)+" "+ t.toString();
+				Utils.info = mContext.getResources().getString(R.string.error_load_zip)+" "+ t.toString();
 			}
 		}	
 		
 		
 		private InputStream openFileInputStream(String name){
 			if (fromRresource)
-				return context.getResources().openRawResource(R.raw.salinger);
+				return mContext.getResources().openRawResource(R.raw.salinger);
 			else
 				try {
 					return new FileInputStream(name);
@@ -597,9 +595,9 @@ Log.d("",""+e);
 				}
 				
 				reader.close();
-				info = "File <"+name+"> loaded. "+strings.size()+" strings.";
+				Utils.info = "File <"+name+"> loaded. "+strings.size()+" strings.";
 			} catch (IOException t) {
-				info = "Error loading "+" "+ t.toString();
+				Utils.info = "Error loading "+" "+ t.toString();
 			}
 		}	
 
@@ -660,7 +658,7 @@ Log.d("",""+e);
 				  bufferFileWriter.close();
 				}
 			} catch (Exception ex) {
-				info = "Error loading "+" "+ ex.toString();
+				Utils.info = "Error loading "+" "+ ex.toString();
 				return;
 			} finally {
 				
@@ -733,9 +731,9 @@ Log.d("",""+e);
 			  }
 		      xpp.next();
 		    }
-			info = "File <"+name+"> loaded. "+entryes.size()+" entries.";
+		    Utils.info = "File <"+name+"> loaded. "+entryes.size()+" entries.";
 		} catch (Throwable t) {
-			info = context.getResources().getString(R.string.error_load_xml)+". "+t.toString();
+			Utils.info = mContext.getResources().getString(R.string.error_load_xml)+". "+t.toString();
 		}	
 		
 	}
