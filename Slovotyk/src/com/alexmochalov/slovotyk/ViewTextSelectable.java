@@ -695,7 +695,7 @@ Log.d("","X = "+event.getRawX());
 		asynkLoader.eventCallback = new AsynkLoader.EventCallback(){
 			@Override
 			public void loadingFinishedCallBack() {
-				
+				Log.d("a","loaded "+strs.size());
 				divideFile(strs);
 			}};
 		asynkLoader.start(context, Utils.fileName, strs, fromRresource);
@@ -736,10 +736,10 @@ Log.d("","X = "+event.getRawX());
 		}
 	}	
 	
-	public void saveFile(String name) {
+	public boolean saveFile(String name) {
 	   	 //RESULTS_FOLDER
 		 FileSaver fileSaver = new FileSaver(context);
-		 fileSaver.saveText(name, Utils.APP_FOLDER, strings);
+		 boolean result = fileSaver.saveText(name, Utils.APP_FOLDER, strings);
 		 
 		 name = Utils.APP_FOLDER+"/"+name;
 		 Log.d("",name);;
@@ -750,7 +750,7 @@ Log.d("","X = "+event.getRawX());
 			loadFile(this.width, name, false);
 		 }
 		 */
-		 
+		 return result;
 	}	
 	
 	private String getSentence(int line)

@@ -36,7 +36,7 @@ public class FileSaver {
         this.context = context;
 	}
 
-	public void saveText(String name, String APP_FOLDER, ArrayList<String> strings){
+	public boolean saveText(String name, String APP_FOLDER, ArrayList<String> strings){
 		try {
 
 			File file = new File(APP_FOLDER);
@@ -45,7 +45,7 @@ public class FileSaver {
 			}
 
 			file = new File(APP_FOLDER, name);
-
+			
 			Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
 
 			//BufferedWriter writer = new BufferedWriter(new FileWriter(file));
@@ -79,7 +79,9 @@ public class FileSaver {
 		} catch (IOException e) {
 			Utils.setInformation(context.getResources().getString(R.string.error_save_file)+" "+e);
 			Toast.makeText(context, context.getResources().getString(R.string.error_save_file) , Toast.LENGTH_LONG).show();
+			return false;
 		}
+		return true;
 	}
 
 	private String strToXML(String str) {
@@ -127,6 +129,8 @@ public class FileSaver {
 	public void save(String name, ArrayList<Entry> entries) {
 		try {
 			File file = new File(name);
+			
+			
 			Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
 
 			writer.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>"+"\n");

@@ -270,6 +270,10 @@ public final class Utils {
 		actionBar.setSubtitle(subtitle);
 	}
 	
+	public static void setActionbarSubTitle(String subtitle){
+		actionBar.setSubtitle(subtitle);
+	}
+	
 	public static void setViewInformation() {
 		/*
        	Utils.textViewInformation = (TextView)activity.findViewById(R.id.textViewInformation);

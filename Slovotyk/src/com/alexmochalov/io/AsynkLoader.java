@@ -292,6 +292,8 @@ public class AsynkLoader {
 			 */
 			try {
 				if (isCancelled()) return;
+				
+				Log.d("a","start "+name);
 				BufferedReader reader;
 				BufferedReader rd = new BufferedReader(new InputStreamReader(new FileInputStream(name)));
 				

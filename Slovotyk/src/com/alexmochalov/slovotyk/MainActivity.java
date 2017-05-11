@@ -146,6 +146,8 @@ public class MainActivity extends Activity  implements OnInitListener
 				
 	    } else {
 			Utils.fileName = prefs.getString(PREFS_FILE_NAME, "");
+			
+			
 			if (Utils.fileName.length() > 0){
 				// Start loading the text 
 				loadFile(Utils.fileName, false);
@@ -598,7 +600,11 @@ public class MainActivity extends Activity  implements OnInitListener
 		if (name.lastIndexOf("/") >= 0)
 			name = name.substring(name.lastIndexOf("/")+1);
 		
-		viewTextSelectable.saveFile(name);
+		if (viewTextSelectable.saveFile(name)){
+			 Utils.fileName = name;
+			 Utils.setActionbarSubTitle(name);
+		}
+		
 		Lexicon.saveFile();
 		Utils.modified = false;
 	}
