@@ -111,7 +111,7 @@ public final class Lexicon {
 
 	public static void load() {
 		entryes.clear();
-		AsynkLoader fileLoader = new AsynkLoader(mContext);
+		AsynkLoader fileLoader = new AsynkLoader(mContext, mContext);
 		fileLoader.loadDictionary(Utils.APP_FOLDER+"/dic.xml", entryes);
 		//notifyDataSetChanged();
 	}

@@ -218,40 +218,41 @@ public final class R {
  Russian 
          */
         public static final int app_name=0x7f070000;
-        public static final int bookmarks=0x7f07002b;
+        public static final int bookmarks=0x7f07002c;
         public static final int cancel=0x7f070013;
         public static final int clear_bookmarks=0x7f07001f;
         public static final int clear_entries_query=0x7f070018;
         public static final int dialog_save=0x7f070006;
         public static final int dialog_save_message=0x7f070007;
         public static final int dictionary_info=0x7f070010;
+        public static final int error_file_not_found=0x7f07002a;
         public static final int error_load_xml=0x7f070028;
         public static final int error_load_zip=0x7f070027;
         public static final int error_save_file=0x7f070029;
         public static final int exit=0x7f070012;
-        public static final int file_saved=0x7f07002d;
+        public static final int file_saved=0x7f07002e;
         public static final int hello_world=0x7f070001;
         public static final int index_not_found=0x7f07001b;
         public static final int info=0x7f07000f;
         /**  View About 
  View About 
          */
-        public static final int info_about=0x7f07002e;
-        public static final int info_about1=0x7f07002f;
-        public static final int info_dict=0x7f070036;
-        public static final int info_dict1=0x7f070037;
-        public static final int info_list=0x7f070034;
-        public static final int info_list1=0x7f070035;
-        public static final int info_loading=0x7f070030;
-        public static final int info_loading1=0x7f070031;
-        public static final int info_marking=0x7f070032;
-        public static final int info_marking1=0x7f070033;
+        public static final int info_about=0x7f07002f;
+        public static final int info_about1=0x7f070030;
+        public static final int info_dict=0x7f070037;
+        public static final int info_dict1=0x7f070038;
+        public static final int info_list=0x7f070035;
+        public static final int info_list1=0x7f070036;
+        public static final int info_loading=0x7f070031;
+        public static final int info_loading1=0x7f070032;
+        public static final int info_marking=0x7f070033;
+        public static final int info_marking1=0x7f070034;
         public static final int information=0x7f070003;
         public static final int internal_dictionary=0x7f070021;
         public static final int internal_dictionary_en_ru=0x7f070022;
         public static final int internal_dictionary_it_ru=0x7f070024;
         public static final int internal_dictionary_sp_en=0x7f070023;
-        public static final int lexicon=0x7f07002c;
+        public static final int lexicon=0x7f07002d;
         public static final int load=0x7f07000c;
         public static final int loading_cancelled=0x7f070026;
         public static final int new_bookmark=0x7f07001e;
@@ -260,8 +261,8 @@ public final class R {
         public static final int sample=0x7f07000b;
         public static final int save=0x7f07000e;
         public static final int selectDictionary=0x7f070025;
-        public static final int selections=0x7f07002a;
-        public static final int url=0x7f070038;
+        public static final int selections=0x7f07002b;
+        public static final int url=0x7f070039;
         public static final int warning_load_text=0x7f070019;
         public static final int warning_no_bookmarks=0x7f07001a;
         public static final int yes=0x7f070008;

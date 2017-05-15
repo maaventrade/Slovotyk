@@ -52,6 +52,7 @@
     <string name="error_load_zip">Ошибка при загрузке ZIP файла.</string>
     <string name="error_load_xml">Ошибка при загрузке XML файла.</string>
     <string name="error_save_file">Ошибка при сохранении XML файла.</string>
+	<string name="error_file_not_found">File not found: </string>
 
     <string name="selections">Selections</string>
     <string name="bookmarks">Bookmarks</string>

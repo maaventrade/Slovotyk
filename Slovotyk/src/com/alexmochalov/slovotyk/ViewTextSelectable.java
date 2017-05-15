@@ -34,6 +34,7 @@ import android.view.View;
 import android.widget.*;
 
 import com.alexmochalov.dic.*;
+import android.app.*;
 
 /**
  * 
@@ -48,6 +49,8 @@ public final class ViewTextSelectable extends TextView {
 	private ArrayList<String> strings;
 	// Main activity 
 	private Context context;
+	private Activity mActivity;
+	
 	private ViewTextSelectable thisContext;
 	
 	// Visual elements:
@@ -191,8 +194,9 @@ public final class ViewTextSelectable extends TextView {
 	 * @param strings
 	 * @param seekBarVertical
 	 */
-	void setParams(Context context, ArrayList<String> strings, SeekBarVertical seekBarVertical, int textSize) {
+	void setParams(Context context, ArrayList<String> strings, SeekBarVertical seekBarVertical, int textSize, Activity activity) {
 		this.context = context;
+		mActivity = activity;
 		this.strings = strings;
 		this.seekBarVertical = seekBarVertical;
 
@@ -691,7 +695,7 @@ Log.d("","X = "+event.getRawX());
 		this.width = width;
 		final ArrayList<String> strs = new ArrayList<String>(); 
 
-		AsynkLoader asynkLoader = new AsynkLoader(context);
+		AsynkLoader asynkLoader = new AsynkLoader(context, mActivity);
 		asynkLoader.eventCallback = new AsynkLoader.EventCallback(){
 			@Override
 			public void loadingFinishedCallBack() {
@@ -705,7 +709,7 @@ Log.d("","X = "+event.getRawX());
 		this.width = width;
 		final ArrayList<String> strs = new ArrayList<String>(); 
 
-		AsynkLoader asynkLoader = new AsynkLoader(context);
+		AsynkLoader asynkLoader = new AsynkLoader(context, mActivity);
 		asynkLoader.eventCallback = new AsynkLoader.EventCallback(){
 			@Override
 			public void loadingFinishedCallBack() {
@@ -741,9 +745,7 @@ Log.d("","X = "+event.getRawX());
 		 FileSaver fileSaver = new FileSaver(context);
 		 boolean result = fileSaver.saveText(name, Utils.APP_FOLDER, strings);
 		 
-		 name = Utils.APP_FOLDER+"/"+name;
-		 Log.d("",name);;
-		 Log.d("",Utils.fileName);
+		
 		 /*
 		 if (! name.equals(Utils.fileName)){
 			Utils.fileName = name;

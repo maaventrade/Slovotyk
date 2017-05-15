@@ -85,7 +85,8 @@ public class MainActivity extends Activity  implements OnInitListener
 
         // Настроить вид ActionBar
         Utils.setActionBar(this);
-    	
+		
+		
         /*
     	int upId = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
     	if (upId > 0) {
@@ -144,7 +145,7 @@ public class MainActivity extends Activity  implements OnInitListener
 	        	
 	        Log.d("", sharedText);
 	        
-			Utils.fileName = Utils.APP_FOLDER+"/new file.txt";
+			Utils.fileName = Utils.APP_FOLDER+o"new file.txt";
 				loadString(Utils.fileName, sharedText);
 				
 	    } else {
@@ -254,7 +255,7 @@ public class MainActivity extends Activity  implements OnInitListener
 			
 			int size = getResources().getDimensionPixelSize(R.dimen.text_size_medium);
 			
-			viewTextSelectable.setParams(this, strings, seekBarVertical, size);
+			viewTextSelectable.setParams(this, strings, seekBarVertical, size, this);
 			
 			Utils.restoreViewParams(viewTextSelectable);
 			

@@ -37,6 +37,7 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
+import android.app.*;
 
 /**
  * 
@@ -51,6 +52,8 @@ public class AsynkLoader {
 	private MyTaskLoading myTaskLoading;
 
 	private Context mContext;
+	private Activity mActivity;
+	
 	// This method is called when procedure finished.
 	public EventCallback eventCallback;
 	
@@ -69,9 +72,10 @@ public class AsynkLoader {
 		void loadingFinishedCallBack(); 
 	}
 	
-	public AsynkLoader(Context context){
+	public AsynkLoader(Context context, Activity activity){
 		super();
         mContext = context;
+		mActivity = activity;
 	}
 	
 	public void start(Context context, String name, ArrayList<String> strings, boolean fromRresource){
@@ -108,6 +112,28 @@ public class AsynkLoader {
 
 	class MyTaskLoading extends AsyncTask<String, String, Void>
 	{
+		private void showToast(final String message){
+			mActivity.runOnUiThread
+			(new Runnable() {
+                        @Override
+                        public void run() {
+							final AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(mContext);
+							dlgAlert.setMessage(message);
+							dlgAlert.setTitle("Error");
+							dlgAlert.setPositiveButton("Ok",
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog, int which) {
+										dialog.dismiss();
+									}
+								});
+							dlgAlert.create().show();
+							
+                           // Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+                        }
+                    });
+		}
+		
+		
 		@Override
 		protected Void doInBackground(String[] p1)
 		{
@@ -278,7 +304,7 @@ public class AsynkLoader {
 			}
 			Log.d("", "END");
 			loadXML(Utils.APP_FOLDER + "/" + nameDest, strings);
-			name = Utils.APP_FOLDER + "/" + nameDest;
+			name = nameDest;
 		}
 
 		public void loadXML(String name, ArrayList<String> strings) {
@@ -502,6 +528,7 @@ Log.d("",""+e);
 				}         
 				Utils.info = "File <"+name+"> loaded. "+strings.size()+" strings.";
 			} catch (Throwable t) {
+				showToast(mContext.getResources().getString(R.string.error_load_xml)+". "+t.toString());
 				Utils.info = mContext.getResources().getString(R.string.error_load_xml)+". "+t.toString();
 			}
 		}
@@ -557,11 +584,12 @@ Log.d("",""+e);
 		private void loadTXT(String name, ArrayList<String> strings){
 			File file = new File(name);
 			if(!file.exists() && !fromRresource){    
+				showToast(mContext.getResources().getString(R.string.error_file_not_found)+name);
 				return;                  
 			}
 			strings.clear();
 			BufferedReader reader;
-			
+		
 			
 			try {
 				int c[] = {0,0,0};
