@@ -73,7 +73,7 @@ public class DialogBookmarks extends Dialog{
 		button.setOnClickListener(new Button.OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				Utils.modified = true;
+				Utils.setModified(true);
 				if (listener != null)
 					listener.onClick(-1);
 				

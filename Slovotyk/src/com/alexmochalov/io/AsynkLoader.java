@@ -66,7 +66,7 @@ public class AsynkLoader {
 	
 	private boolean loadFromURL = false;
 	
-	private boolean fromRresource;
+	private boolean mFromRresource;
 	
 	public interface EventCallback { 
 		void loadingFinishedCallBack(); 
@@ -82,7 +82,7 @@ public class AsynkLoader {
         mContext = context;
         this.name = name;
         this.strings = strings;
-        this.fromRresource = fromRresource;
+        mFromRresource = fromRresource;
 
         Utils.setTextLoading(true);
 		myTaskLoading = new MyTaskLoading();    
@@ -137,7 +137,7 @@ public class AsynkLoader {
 		@Override
 		protected Void doInBackground(String[] p1)
 		{
-			
+			Log.d("a", "Name  " + name);
 			if (loadFromURL) loadURL(name, nameDest, strings);
 			else if (name.endsWith(".txt")) loadTXT(name, strings);
 			else if (name.endsWith(".fb2.zip")) loadZIP(name, strings);
@@ -176,10 +176,14 @@ public class AsynkLoader {
 
 			Utils.setTextLoading(false);
 
-			Log.d("", "LOADING FINISHED --- " + strings.size());
+			//Log.d("", "LOADING FINISHED --- " + strings.size());
 
-			Utils.fileName = name;
-
+			if (mFromRresource)
+				Utils.fileName = Utils.getAppDirectory() + name;
+			else Utils.fileName = name;
+			
+			Log.d("a", "Utils.fileName  " + Utils.fileName);
+			
 			if (eventCallback != null)
 				eventCallback.loadingFinishedCallBack();
 		}
@@ -203,10 +207,7 @@ public class AsynkLoader {
 
 		public void loadURL(String nameSrc, String nameDest,
 				ArrayList<String> strings) {
-			File file = new File(Utils.APP_FOLDER);
-			if (!file.exists()) {
-				file.mkdirs();
-			}
+			
 			// String nameDest = nameSrc;
 			int i = nameDest.lastIndexOf("/");
 			if (i >= 0)
@@ -217,7 +218,7 @@ public class AsynkLoader {
 			else
 				nameDest = nameDest + ".xml";
 
-			file = new File(Utils.APP_FOLDER + "/" + nameDest);
+			File file = new File(Utils.getAppFolder() + nameDest);
 			try {
 				if (isCancelled())
 					return;
@@ -303,7 +304,7 @@ public class AsynkLoader {
 				Log.d("", "FINISH");
 			}
 			Log.d("", "END");
-			loadXML(Utils.APP_FOLDER + "/" + nameDest, strings);
+			loadXML(Utils.getAppFolder() + nameDest, strings);
 			name = nameDest;
 		}
 
@@ -571,7 +572,7 @@ Log.d("",""+e);
 		
 		
 		private InputStream openFileInputStream(String name){
-			if (fromRresource)
+			if (mFromRresource)
 				return mContext.getResources().openRawResource(R.raw.salinger);
 			else
 				try {
@@ -583,7 +584,7 @@ Log.d("",""+e);
 		
 		private void loadTXT(String name, ArrayList<String> strings){
 			File file = new File(name);
-			if(!file.exists() && !fromRresource){    
+			if(!file.exists() && !mFromRresource){    
 				showToast(mContext.getResources().getString(R.string.error_file_not_found)+name);
 				return;                  
 			}
@@ -630,10 +631,7 @@ Log.d("",""+e);
 		}	
 
 		public void loadHTML(String name, ArrayList<String> strings){
-			File file = new File(Utils.APP_FOLDER);
-			if(!file.exists()){                          
-				file.mkdirs();                  
-			}
+			
 			/*
 			try {
 				progressDialog.setMax(Utils.countLines(name));
@@ -643,7 +641,7 @@ Log.d("",""+e);
 			*/
 			//String UTF8 = "utf8";
 			
-			file = new File(Utils.APP_FOLDER+"/temp.xml");
+			File file = new File(Utils.getAppFolder() + "temp.xml");
 			try {
 				InputStreamReader inputStream = new InputStreamReader(new FileInputStream(name));
 				//InputStream inputStream = new FileInputStream(name, );
@@ -691,7 +689,7 @@ Log.d("",""+e);
 			} finally {
 				
 			}
-			loadXML(Utils.APP_FOLDER+"/temp.xml", strings);
+			loadXML(Utils.getAppFolder() + "temp.xml", strings);
 		}	
 
 		

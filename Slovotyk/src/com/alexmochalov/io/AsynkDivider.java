@@ -58,7 +58,7 @@ public class AsynkDivider
 		progressDialog = new ProgressDialog(context);
 		progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		progressDialog.setTitle("Dividing strings");
-		progressDialog.setMessage(Utils.getFileName());
+		progressDialog.setMessage(Utils.extractFileName());
 		progressDialog.setCancelable(false);
 		progressDialog.setMax(source.size());
 		

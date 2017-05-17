@@ -42,7 +42,7 @@ public final class Utils {
 	public static final char CHAR_TAB =  9;
 	
 	static String PROGRAMM_FOLDER = "xolosoft";
-	public static String APP_FOLDER = Environment.getExternalStorageDirectory().getPath()+"/"+PROGRAMM_FOLDER+"/Slovotyk";
+	private static String APP_FOLDER = Environment.getExternalStorageDirectory().getPath()+"/"+PROGRAMM_FOLDER+"/Slovotyk";
 	String RESULTS_FOLDER = "results";
 	static String EXTERNAL_STORAGE_DIRECTORY = Environment.getExternalStorageDirectory().getPath();
 	public static String fileName = "";
@@ -51,7 +51,7 @@ public final class Utils {
 	private static int internalDictionaryID = 0;
 	private static String internalDictionary = "";
 	
-	public static boolean modified = false;
+	private static boolean mModified = false;
 
 	private static int firstLine = -1;
 	private static int firstLinePixelShift = -1;
@@ -128,7 +128,15 @@ public final class Utils {
 		return file.getAbsolutePath() + "/";
 	}
 
-	public static String getFileName() {
+	public static String getAppFolder() {
+		File file = new File(EXTERNAL_STORAGE_DIRECTORY, APP_FOLDER);
+		if(!file.exists()){                          
+			file.mkdirs();                  
+		}
+		return file.getAbsolutePath() + "/";
+	}
+	
+	public static String extractFileName() {
 		if (fileName.length() == 0) return "No text";
 		int i = fileName.lastIndexOf("/");
 		if (i > 0)
@@ -417,6 +425,12 @@ public final class Utils {
 	
 	}
 
+	public static boolean getModified(){
+		return mModified;
+	}
 	
+	public static void setModified(boolean modified){
+		mModified = modified;
+	}
 }
 

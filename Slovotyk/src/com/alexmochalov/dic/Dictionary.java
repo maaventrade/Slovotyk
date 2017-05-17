@@ -58,7 +58,7 @@ public final class Dictionary{
 	
 	public static void load(String dictionary_name, String index_file_name) {
 		if (Utils.isInternalDictionary())
-			index_file_name= Utils.APP_FOLDER+"/"+dictionary_name.replace(".xdxf", ".index");
+			index_file_name= Utils.getAppFolder() +dictionary_name.replace(".xdxf", ".index");
 		else	
 			index_file_name= dictionary_name.replace(".xdxf", ".index");
 		
@@ -262,7 +262,7 @@ int n = 0;
 		
 		String index_file_name;
 		if (Utils.isInternalDictionary())
-			index_file_name= Utils.APP_FOLDER+"/"+dictionary_name.replace(".xdxf", ".index");
+			index_file_name= Utils.getAppFolder() +dictionary_name.replace(".xdxf", ".index");
 		else	
 			index_file_name= dictionary_name.replace(".xdxf", ".index");
 

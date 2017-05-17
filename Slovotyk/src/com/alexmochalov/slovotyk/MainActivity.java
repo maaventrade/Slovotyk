@@ -123,7 +123,7 @@ public class MainActivity extends Activity  implements OnInitListener
 		Utils.setInternalDictionary(prefs.getString(INTERNAL_DICT, "eng_ru.xdxf"));
 
 		dictionary_name = prefs.getString(PREFS_DICT_NAME, "eng_ru.xdxf");
-		index_file_name = prefs.getString(PREFS_INDX_NAME, Utils.APP_FOLDER+"/eng_ru.xdxf");
+		index_file_name = prefs.getString(PREFS_INDX_NAME, Utils.getAppFolder()+"eng_ru.xdxf");
 		initPath = prefs.getString(INIT_PATH, Utils.EXTERNAL_STORAGE_DIRECTORY);
 		//Log.d("z","dictionary_name "+dictionary_name);
 		Utils.instant_translation = prefs.getBoolean(INSTANT_TRANSLATION, false);
@@ -145,7 +145,7 @@ public class MainActivity extends Activity  implements OnInitListener
 	        	
 	        Log.d("", sharedText);
 	        
-			Utils.fileName = Utils.APP_FOLDER+o"new file.txt";
+			Utils.fileName = Utils.getAppFolder()+"new file.txt";
 				loadString(Utils.fileName, sharedText);
 				
 	    } else {
@@ -154,7 +154,7 @@ public class MainActivity extends Activity  implements OnInitListener
 			
 			if (Utils.fileName.length() > 0){
 				// Start loading the text 
-				loadFile(Utils.APP_FOLDER + "/" + Utils.fileName, false);
+				loadFile(Utils.fileName, false);
 				//if (Utils.info.length() > 0)
 				//	Toast.makeText(this, Utils.info, Toast.LENGTH_LONG).show();
 				
@@ -181,7 +181,7 @@ public class MainActivity extends Activity  implements OnInitListener
 					Utils.setActionbarTitle(Utils.getaLanguage(),
 						Utils.getDictionaryFileName(), true);
 				else Utils.setActionbarTitle(Utils.getaLanguage(),
-											 Utils.getFileName(), false);
+											 Utils.extractFileName(), false);
 			}
 
 			@Override
@@ -243,7 +243,7 @@ public class MainActivity extends Activity  implements OnInitListener
 	    	   // up.setImageResource(R.drawable.logo);
 	    	}    	
 			Utils.setActionbarTitle(Utils.getaLanguage(),
-				Utils.getFileName(), false);
+				Utils.extractFileName(), false);
 			//Utils.setActionbarTitle("");
 			
 			viewTextSelectable = (ViewTextSelectable)findViewById(R.id.viewTextSelectable);
@@ -378,7 +378,7 @@ public class MainActivity extends Activity  implements OnInitListener
 	public void onResume() {
 		super.onResume();
 		
-		File file = new File(Utils.APP_FOLDER);
+		File file = new File(Utils.getAppFolder());
 		if(!file.exists()){                          
 			file.mkdirs();                  
 		}
@@ -465,11 +465,11 @@ public class MainActivity extends Activity  implements OnInitListener
 				break;
 			case R.id.action_refresh: 
 				Lexicon.refresh();
-				Utils.modified = true;
+				Utils.setModified(true);
 				break;
 			case R.id.internal_dictionary_en_ru: 
 				String fileName = "eng_ru.xdxf";
-				String indexFileName = Utils.APP_FOLDER+"/"+fileName;
+				String indexFileName = Utils.getAppFolder()+fileName;
 				Utils.setInternalDictionary("eng_ru.xdxf");
 				// Try to find the Index file
 				File file = new File(indexFileName);
@@ -481,7 +481,7 @@ public class MainActivity extends Activity  implements OnInitListener
 				break;
 			case R.id.internal_dictionary_sp_en: 
 				fileName = "span_eng.xdxf";
-				indexFileName = Utils.APP_FOLDER+"/"+fileName;
+				indexFileName = Utils.getAppFolder()+fileName;
 				Utils.setInternalDictionary("span_eng.xdxf");
 				// Try to find the Index file
 				file = new File(indexFileName);
@@ -493,7 +493,7 @@ public class MainActivity extends Activity  implements OnInitListener
 				break;
 			case R.id.internal_dictionary_it_ru: 
 				dictionary_name = "it_ru.xdxf";
-				index_file_name = Utils.APP_FOLDER+"/"+dictionary_name;/// replace to .index !!!
+				index_file_name = Utils.getAppFolder()+dictionary_name;/// replace to .index !!!
 				
 				Utils.setInternalDictionary("it_ru.xdxf");
 				// Try to find the Index file
@@ -603,17 +603,23 @@ public class MainActivity extends Activity  implements OnInitListener
 		
 		if (name.length() == 0)
 			return;
+			
 		name = name.substring(0,(name.lastIndexOf(".")))+".xml";
-		if (name.lastIndexOf("/") >= 0)
-			name = name.substring(name.lastIndexOf("/")+1);
+		//if (name.lastIndexOf("/") >= 0)
+			//name = name.substring(name.lastIndexOf("/")+1);
 		
 		if (viewTextSelectable.saveFile(name)){
 			 Utils.fileName = name;
-			 Utils.setActionbarSubTitle(name);
+			 Utils.setActionbarSubTitle(name);		
+			 
+			 Editor editor = prefs.edit();
+			 editor.putString(PREFS_FILE_NAME, Utils.fileName);
+			 editor.commit();
+			 
 		}
 		
 		Lexicon.saveFile();
-		Utils.modified = false;
+		Utils.setModified(false);
 	}
 
 	@Override
@@ -637,8 +643,8 @@ public class MainActivity extends Activity  implements OnInitListener
 		if (resultCode==RESULT_OK){
 			if (requestCode == 0){
 				Utils.fileName = data.getStringExtra("returnedData");
-				if (Utils.fileName.lastIndexOf("/") >= 0)
-					initPath = Utils.fileName.substring(0, Utils.fileName.lastIndexOf("/"));
+				//if (Utils.fileName.lastIndexOf("/") >= 0)
+					//initPath = Utils.fileName.substring(0, Utils.fileName.lastIndexOf("/"));
 				
 				loadFile(Utils.fileName, false);
 			} else if (requestCode == 1){
@@ -665,7 +671,7 @@ public class MainActivity extends Activity  implements OnInitListener
 		viewTextSelectable.progressDialogHide();
 		Editor editor = prefs.edit();
 		
-		editor.putString(PREFS_FILE_NAME, Utils.fileName);
+		//editor.putString(PREFS_FILE_NAME, Utils.fileName);
 		editor.putInt(PREFS_FIRST_LINE, viewTextSelectable.getFirstLine());
 
 		editor.putString(PREFS_DICT_NAME, Utils.getDictionaryFileName());
@@ -697,7 +703,7 @@ public class MainActivity extends Activity  implements OnInitListener
 	}
 
 	 void dialogSaveFile(final boolean onExit, final boolean fromURL){
-		if (!Utils.modified)
+		if (!Utils.getModified())
 		{
 			if (onExit)
 				MainActivity.this.finish();
@@ -716,7 +722,7 @@ public class MainActivity extends Activity  implements OnInitListener
 				public void onClick(DialogInterface dialog, int id) {
 					saveFile();
 					Toast.makeText(MainActivity.this,"Saved", Toast.LENGTH_LONG).show();
-					Utils.modified = false;
+					Utils.setModified( false);
 					if (onExit)
 						MainActivity.this.finish();
 			    	else if (fromURL) 

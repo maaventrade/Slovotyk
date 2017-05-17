@@ -106,13 +106,13 @@ public final class Lexicon {
 	
 	public static void saveFile() {
 		FileSaver fileSaver = new FileSaver(mContext);
-		fileSaver.save(Utils.APP_FOLDER+"/dic.xml", entryes);
+		fileSaver.save(Utils.getAppFolder()+"dic.xml", entryes);
 	}
 
 	public static void load() {
 		entryes.clear();
 		AsynkLoader fileLoader = new AsynkLoader(mContext, mContext);
-		fileLoader.loadDictionary(Utils.APP_FOLDER+"/dic.xml", entryes);
+		fileLoader.loadDictionary(Utils.getAppFolder()+"dic.xml", entryes);
 		//notifyDataSetChanged();
 	}
 

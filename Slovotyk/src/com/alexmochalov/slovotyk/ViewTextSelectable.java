@@ -133,7 +133,7 @@ public final class ViewTextSelectable extends TextView {
 			strings.set(strings.indexOf(string), s);
 		}
 		// Sets the flag that text is modified  
-		Utils.modified = true;
+		Utils.setModified(true);
 		invalidate();
 		Toast.makeText(context, "Ok", Toast.LENGTH_SHORT).show();
 	}
@@ -310,7 +310,7 @@ Log.d("","X = "+event.getRawX());
 							Lexicon.addEntries(entry, text, translation, sentence, nextTwoWords); 
 						}
 
-						Utils.modified = true;
+						Utils.setModified(true);
 						
 					}
 					
@@ -743,7 +743,7 @@ Log.d("","X = "+event.getRawX());
 	public boolean saveFile(String name) {
 	   	 //RESULTS_FOLDER
 		 FileSaver fileSaver = new FileSaver(context);
-		 boolean result = fileSaver.saveText(name, Utils.APP_FOLDER, strings);
+		 boolean result = fileSaver.saveText(name, Utils.getAppFolder(), strings);
 		 
 		
 		 /*
