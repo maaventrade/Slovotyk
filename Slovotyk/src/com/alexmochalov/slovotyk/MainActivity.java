@@ -172,7 +172,7 @@ public class MainActivity extends Activity  implements OnInitListener
 				dictionary_name = Utils.getDictionaryFileName();
 				index_file_name = Utils.getIndexFileName();
 				
-			//Log.d("z","dic loaded "+dictionary_name);
+				Log.d("a","dic loaded "+dictionary_name);
 			//for (int i = 0; i<10;i++)
 			//	Log.d("s", ""+Dictionary.getIndexEntries().get(i).getName());
 				entryEditor.reset();
@@ -189,6 +189,9 @@ public class MainActivity extends Activity  implements OnInitListener
 				Dictionary.load(dictionary_name, index_file_name);
 			}
 		};
+		
+		Log.d("a","dictionary_name "+dictionary_name);
+		
 		Dictionary.setParams(this);
 		Dictionary.load(dictionary_name, index_file_name);
 		

@@ -12,6 +12,7 @@
     <style name="MyApp.ActionBar" parent="android:Widget.Holo.Light.ActionBar.Solid">
         <!-- Blue background color & black bottom border -->
         <item name="android:background">@color/sky_blue</item>
+		<item name="android:actionMenuTextColor">@color/white</item>
     	<item name="android:titleTextStyle">@style/MyApp.ActionBar.TitleTextStyle</item>
         </style>   
 

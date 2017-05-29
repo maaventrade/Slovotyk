@@ -39,12 +39,7 @@ public class FileSaver {
 	public boolean saveText(String name, String APP_FOLDER, ArrayList<String> strings){
 		try {
 
-			File file = new File(APP_FOLDER);
-			if(!file.exists()){                          
-				file.mkdirs();                  
-			}
-
-			file = new File(APP_FOLDER, name);
+			File file = new File(name);
 			
 			Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
 
@@ -77,8 +72,8 @@ public class FileSaver {
 					context.getResources().getString(R.string.file_saved)+" "+name, Toast.LENGTH_LONG)
 					.show();
 		} catch (IOException e) {
-			Utils.setInformation(context.getResources().getString(R.string.error_save_file)+" "+e);
-			Toast.makeText(context, context.getResources().getString(R.string.error_save_file) , Toast.LENGTH_LONG).show();
+			//Utils.setInformation(context.getResources().getString(R.string.error_save_file)+" "+e);
+			Toast.makeText(context, context.getResources().getString(R.string.error_save_file) +" "+e , Toast.LENGTH_LONG).show();
 			return false;
 		}
 		return true;
@@ -144,7 +139,7 @@ public class FileSaver {
 
 			writer.close();
 		} catch (IOException e) {
-			Toast.makeText(context, context.getResources().getString(R.string.error_save_file) , Toast.LENGTH_LONG).show();
+			Toast.makeText(context, context.getResources().getString(R.string.error_save_file) +" "+name, Toast.LENGTH_LONG).show();
 		}
 	}	
 

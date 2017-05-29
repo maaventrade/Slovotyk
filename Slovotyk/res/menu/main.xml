@@ -2,6 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.ww.MainActivity" >
 
+	<item
+        android:id="@+id/action_lexicon"
+        android:orderInCategory="11"
+        android:showAsAction="always"
+        android:title="@string/lexicon"/>
 	
 	
 	<item

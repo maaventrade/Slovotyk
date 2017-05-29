@@ -8,14 +8,14 @@
 
     <!-- The beef: background color for Action Bar overflow menu -->
     <style name="MyApp.PopupMenu" parent="android:Widget.Holo.Light.ListPopupWindow">
-        <item name="android:popupBackground">@color/sky_blue</item>
+        <item name="android:popupBackground">@color/bronze</item>
         <item name="android:textColor">@color/white</item>
         </style>
 
     <!-- Bonus: if you want to style whole Action Bar, not just the menu -->
     <style name="MyApp.ActionBar" parent="android:Widget.Holo.Light.ActionBar.Solid">
         <!-- Blue background color & black bottom border -->
-        <item name="android:background">@color/sky_blue</item>
+        <item name="android:background">@color/bronze</item>
         <item name="android:textColor">@color/white</item>
         </style>   
 

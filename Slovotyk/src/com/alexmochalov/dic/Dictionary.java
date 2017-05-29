@@ -65,8 +65,8 @@ public final class Dictionary{
 		mIndexFileName = index_file_name;
 		mDictionaryName = dictionary_name;
 
-		//Log.d("s","Start Loading "+dictionary_name);
-		//Log.d("s",index_file_name);
+		Log.d("a","Start Loading "+dictionary_name);
+		Log.d("a",index_file_name);
 		
 		File file = new File(index_file_name);
 		
