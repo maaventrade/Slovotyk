@@ -18,7 +18,7 @@
         android:largeHeap="true">
         <activity
             android:label="@string/app_name"
-            android:name=".MainActivity"       
+            android:name="com.alexmochalov.main.MainActivity"       
         >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />

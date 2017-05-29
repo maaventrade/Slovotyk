@@ -2,9 +2,9 @@ package com.alexmochalov.bmk;
 
 import java.util.ArrayList;
 
-import com.alexmochalov.slovotyk.MainActivity;
+import com.alexmochalov.main.MainActivity;
+import com.alexmochalov.main.Utils;
 import com.alexmochalov.slovotyk.R;
-import com.alexmochalov.slovotyk.Utils;
 import com.alexmochalov.slovotyk.R.id;
 import com.alexmochalov.slovotyk.R.layout;
 

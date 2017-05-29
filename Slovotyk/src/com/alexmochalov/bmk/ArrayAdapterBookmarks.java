@@ -3,7 +3,7 @@ package com.alexmochalov.bmk;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.alexmochalov.slovotyk.Mark;
+import com.alexmochalov.main.Mark;
 import com.alexmochalov.slovotyk.R;
 import com.alexmochalov.slovotyk.R.id;
 import com.alexmochalov.slovotyk.R.layout;

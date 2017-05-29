@@ -4,11 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <com.alexmochalov.slovotyk.NonSwipeableViewPager
+    <com.alexmochalov.main.NonSwipeableViewPager
         android:id="@+id/nonSwipeableViewPager"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1" >
-    </com.alexmochalov.slovotyk.NonSwipeableViewPager>
+    </com.alexmochalov.main.NonSwipeableViewPager>
     
 </LinearLayout>

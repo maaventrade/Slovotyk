@@ -32,8 +32,9 @@
 	<string name="warning_load_text">First, load a text.</string>
 	<string name="warning_no_bookmarks">No bookmarks.</string>
 			
-	<string name="index_not_found">Index not found. Reopen dictionary.</string>
-		
+	<string name="index_not_found">Index not found.</string>
+	<string name="query_index_dictionary">Reindex dictionary?</string>
+			
 	<string name="action_select_dictionary">Select dictionary</string>
 	<string name="action_index_dictionary">Reindex dictionary</string>
 

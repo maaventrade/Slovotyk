@@ -13,9 +13,10 @@ import java.util.ArrayList;
 
 
 
+
 import com.alexmochalov.dic.Entry;
+import com.alexmochalov.main.Utils;
 import com.alexmochalov.slovotyk.R;
-import com.alexmochalov.slovotyk.Utils;
 import com.alexmochalov.slovotyk.R.string;
 
 import android.content.Context;

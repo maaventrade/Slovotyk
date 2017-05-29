@@ -7,7 +7,10 @@ import android.util.*;
 import android.view.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
-import com.alexmochalov.slovotyk.*;
+
+import com.alexmochalov.main.*;
+import com.alexmochalov.slovotyk.R;
+
 import java.util.*;
 
 public class EntryEditor {

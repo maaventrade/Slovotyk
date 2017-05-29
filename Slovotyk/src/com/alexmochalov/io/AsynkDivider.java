@@ -2,7 +2,7 @@ package com.alexmochalov.io;
 
 import java.util.ArrayList;
 
-import com.alexmochalov.slovotyk.Utils;
+import com.alexmochalov.main.Utils;
 
 import android.app.ProgressDialog;
 import android.content.Context;

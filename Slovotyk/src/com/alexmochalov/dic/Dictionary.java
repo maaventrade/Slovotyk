@@ -25,8 +25,8 @@ import android.widget.Toast;
 import android.text.*;
 
 import com.alexmochalov.dic.Dictionary.*;
+import com.alexmochalov.main.Utils;
 import com.alexmochalov.slovotyk.R;
-import com.alexmochalov.slovotyk.Utils;
 import com.alexmochalov.slovotyk.R.string;
 
 public final class Dictionary{
@@ -48,15 +48,17 @@ public final class Dictionary{
 	static String info;
 
 	public interface EventCallback { 
-		void loadingFinishedCallBack(); 
-		void indexingFinishedCallBack(String dictionary_name, String index_file_name); 
+		void loadingFinishedCallBack(boolean result); 
+		void indexingFinishedCallBack(String dictionary_name); 
 	}
 	
 	public static void setParams(Context context) {
 		mContext = context;
 	}
 	
-	public static void load(String dictionary_name, String index_file_name) {
+	public static void load(String dictionary_name) {
+		
+		String index_file_name;
 		if (Utils.isInternalDictionary())
 			index_file_name= Utils.getAppFolder() +dictionary_name.replace(".xdxf", ".index");
 		else	
@@ -71,11 +73,8 @@ public final class Dictionary{
 		File file = new File(index_file_name);
 		
 		if(!file.exists()){
-			// If Index file not found show the message  
-			Toast.makeText(mContext, mContext.getResources().getString(R.string.index_not_found), Toast.LENGTH_LONG)
-					.show();
 			if (eventCallback != null)
-				eventCallback.loadingFinishedCallBack();
+				eventCallback.loadingFinishedCallBack(false);
 			return;
 		}
 		loadAsinc();
@@ -116,7 +115,7 @@ public final class Dictionary{
 			Toast.makeText(mContext,
 					"Cancelled", Toast.LENGTH_LONG) // mContext.getResources().getString(R.string.loading_cancelled)
 					.show();
-			eventCallback.loadingFinishedCallBack(); 	
+			eventCallback.loadingFinishedCallBack(true); 	
 		}
 		
 		@Override    
@@ -131,7 +130,7 @@ public final class Dictionary{
 			Utils.setInformation(info);
 			
 			if (eventCallback != null)
-				eventCallback.loadingFinishedCallBack();
+				eventCallback.loadingFinishedCallBack(true);
 			//invalidate();    
 			//seekBarVertical.setMax(getStringsSize());
 		}
@@ -306,7 +305,7 @@ int n = 0;
 			Utils.setInformation(info);
 			Log.d("","eventCallback --->>>>> "+eventCallback);
 			if (eventCallback != null){
-				eventCallback.indexingFinishedCallBack(mDictionaryName, mIndexFileName);
+				eventCallback.indexingFinishedCallBack(mDictionaryName);
 				}
 		}
 	}	

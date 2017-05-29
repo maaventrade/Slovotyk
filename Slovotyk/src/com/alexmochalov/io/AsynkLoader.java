@@ -26,8 +26,8 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import com.alexmochalov.dic.Entry;
+import com.alexmochalov.main.Utils;
 import com.alexmochalov.slovotyk.R;
-import com.alexmochalov.slovotyk.Utils;
 import com.alexmochalov.slovotyk.R.raw;
 import com.alexmochalov.slovotyk.R.string;
 

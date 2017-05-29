@@ -8,53 +8,95 @@
 	android:descendantFocusability="blocksDescendants"
 	android:orientation="vertical">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:layout_weight="1"
+            android:background="@color/salad"
+            android:gravity="end" >
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Button" />
+
+            <ImageButton
+                android:id="@+id/ImageButton01"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/speaker" />
+
+            <ImageButton
+                android:id="@+id/entryImageButtonSpeak"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/speaker" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Medium Text"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold"
+                android:typeface="serif" />
+
+            <TextView
+                android:id="@+id/phonetic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Medium Text"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </FrameLayout>
+
 	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="1"
+	    android:orientation="vertical" >
 
-		<TextView
-		    android:id="@+id/text"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:layout_weight="1"
-		    android:text="Medium Text"
-		    android:textSize="@dimen/text_size_medium"
-		    android:textStyle="bold"
-		    android:typeface="serif" />
+	    <TextView
+	        android:id="@+id/sample"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/bg1"
+	        android:maxLines="@integer/max_lines"
+	        android:text="Medium Text"
+	        android:textSize="@dimen/text_size_medium" />
 
-		<TextView
-		    android:id="@+id/phonetic"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:layout_weight="1"
-		    android:textSize="@dimen/text_size_medium"
-		    android:textStyle="bold" />
-
-		<ImageButton
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:src="@drawable/speaker"
-			android:id="@+id/entryImageButtonSpeak"/>
-
+	    <TextView
+	        android:id="@+id/translation"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/bg2"
+	        android:maxLines="@integer/max_lines"
+	        android:text="Medium Text"
+	        android:textSize="@dimen/text_size_medium" />
 	</LinearLayout>
-
-	<TextView
-	    android:id="@+id/sample"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:background="@drawable/bg1"
-	    android:maxLines="@integer/max_lines"
-	    android:text="Medium Text"
-	    android:textSize="@dimen/text_size_medium" />
-
-	<TextView
-	    android:id="@+id/translation"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:background="@drawable/bg2"
-	    android:maxLines="@integer/max_lines"
-	    android:text="Medium Text"
-	    android:textSize="@dimen/text_size_medium" />
 
 </LinearLayout>
 

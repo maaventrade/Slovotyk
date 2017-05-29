@@ -33,11 +33,12 @@
 	<string name="warning_load_text">Сначала загрузите текст.</string>
 	<string name="warning_no_bookmarks">Закладок нет.</string>
 			
-	<string name="index_not_found">Индексный файл не найден. Откройте словарь заново.</string>
+	<string name="index_not_found">Индексный файл не найден.</string>
 		
 	<string name="action_select_dictionary">Открыть словарь</string>
 	<string name="action_index_dictionary">Переиндексировать словарь</string>
-
+	<string name="query_index_dictionary">Переиндексировать словарь?</string>
+	
 	<string name="new_bookmark">Новая закладка:</string>
 	<string name="clear_bookmarks">Удалить закладки</string>
 	<string name="action_add_del_bookmark">Добавить/Удалить закладку</string>

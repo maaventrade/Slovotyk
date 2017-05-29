@@ -11,14 +11,14 @@
 		android:layout_height="wrap_content"
 		android:layout_weight="1">
 
-		<com.alexmochalov.slovotyk.ViewTextSelectable
+		<com.alexmochalov.viewText.ViewTextSelectable
 			android:id="@+id/viewTextSelectable"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
 			android:textSize="@dimen/text_size_medium"
 			android:layout_weight="2"/>
 	    
-		<com.alexmochalov.slovotyk.SeekBarVertical
+		<com.alexmochalov.viewText.SeekBarVertical
 			android:id="@+id/SeekBarVertical"
 			android:layout_width="wrap_content"
 			android:layout_height="fill_parent"

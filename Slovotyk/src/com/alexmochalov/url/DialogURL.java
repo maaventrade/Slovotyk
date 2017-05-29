@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.alexmochalov.dic.Entry;
+import com.alexmochalov.main.Utils;
 import com.alexmochalov.slovotyk.R;
-import com.alexmochalov.slovotyk.Utils;
 import com.alexmochalov.slovotyk.R.id;
 import com.alexmochalov.slovotyk.R.layout;
 
