@@ -76,7 +76,7 @@ public class ArrayAdapterLexicon extends ArrayAdapter<Entry>{
 				}
 			});
 			
-		
+		final LinearLayout linearLayoutButtons = (LinearLayout)convertView.findViewById(R.id.linearLayoutButtons);
 		LinearLayout layoutText = (LinearLayout)convertView.findViewById(R.id.layoutText);
 		layoutText.setOnTouchListener(new View.OnTouchListener() {
 	        @Override
@@ -87,9 +87,17 @@ public class ArrayAdapterLexicon extends ArrayAdapter<Entry>{
 	    		int x = (int) event.getX();
 	    		
 	            if (action == MotionEvent.ACTION_DOWN) {
-	            	arg0.animate().translationX(-300);
+					
+					
 	            } else if (action == MotionEvent.ACTION_MOVE) {
-	            	
+	            	if (x0 > x){
+						
+						final int left  =  linearLayoutButtons.getWidth();
+						arg0.animate().translationX(-left);
+						
+					} else if (x0 < x){
+						arg0.animate().translationX(0);
+					}
 	            	//LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
 	            	//	     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 	            	//layoutParams.setMargins(30, 0, 0, 0);	            	
@@ -98,19 +106,26 @@ public class ArrayAdapterLexicon extends ArrayAdapter<Entry>{
 	            	
 	            	
 	            } else if (action == MotionEvent.ACTION_UP) {
-	            	arg0.animate().translationX(0);
+	            	
 	            }
 	            
             	y0 = y;
             	x0 = x;
             	
-            	Log.d("", ""+x+" "+y);
+            	Log.d("b", ""+x+" "+y);
             	
 				return true;
 	        }
 	    });
 		
 		return convertView;
+	}
+	
+	private int getRelativeLeft(View myView) {
+		if (myView.getParent() == myView.getRootView())
+			return myView.getLeft();
+		else
+			return myView.getLeft() + getRelativeLeft((View) myView.getParent());
 	}
 
 	public int getCount(){

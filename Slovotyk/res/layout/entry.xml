@@ -8,94 +8,101 @@
 	android:descendantFocusability="blocksDescendants"
 	android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.1" >
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="0.1">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:layout_weight="1"
-            android:background="@color/salad"
-            android:gravity="end" >
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_gravity="end"
+			android:layout_weight="1"
+			android:background="@color/salad"
+			android:id="@+id/linearLayoutButtons"
+			android:gravity="end">
 
-            <Button
-                android:id="@+id/button1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Button" />
+			<Button
+				android:id="@+id/button1"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:text="Button"/>
 
-            <ImageButton
-                android:id="@+id/ImageButton01"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/speaker" />
+			<ImageButton
+				android:id="@+id/ImageButton01"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:src="@drawable/speaker"/>
 
-            <ImageButton
-                android:id="@+id/entryImageButtonSpeak"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/speaker" />
-        </LinearLayout>
+			<ImageButton
+				android:id="@+id/entryImageButtonSpeak"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:src="@drawable/speaker"/>
 
-        <LinearLayout
-            android:id="@+id/layoutText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/white"
-            android:orientation="vertical" >
+		</LinearLayout>
 
-            <TextView
-                android:id="@+id/text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Medium Text"
-                android:textSize="@dimen/text_size_medium"
-                android:textStyle="bold"
-                android:typeface="serif" />
+		<LinearLayout
+			android:id="@+id/layoutText"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:background="@color/white"
+			android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/phonetic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Medium Text"
-                android:textSize="@dimen/text_size_medium"
-                android:textStyle="bold" />
-        </LinearLayout>
+			<TextView
+				android:id="@+id/text"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="Medium Text"
+				android:textSize="@dimen/text_size_medium"
+				android:textStyle="bold"
+				android:gravity="center"
+				android:typeface="serif"/>
 
-    </FrameLayout>
+			<TextView
+				android:id="@+id/phonetic"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="Medium Text"
+				android:gravity="center"
+				android:textSize="@dimen/text_size_medium"
+				android:textStyle="bold"/>
+
+		</LinearLayout>
+
+	</FrameLayout>
 
 	<LinearLayout
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_weight="1"
-	    android:orientation="vertical" >
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:orientation="vertical">
 
-	    <TextView
-	        android:id="@+id/sample"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:background="@drawable/bg1"
-	        android:maxLines="@integer/max_lines"
-	        android:text="Medium Text"
-	        android:textSize="@dimen/text_size_medium" />
+		<TextView
+			android:id="@+id/sample"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/bg1"
+			android:maxLines="@integer/max_lines"
+			android:text="Medium Text"
+			android:textSize="@dimen/text_size_medium"/>
 
-	    <TextView
-	        android:id="@+id/translation"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:background="@drawable/bg2"
-	        android:maxLines="@integer/max_lines"
-	        android:text="Medium Text"
-	        android:textSize="@dimen/text_size_medium" />
+		<TextView
+			android:id="@+id/translation"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/bg2"
+			android:maxLines="@integer/max_lines"
+			android:text="Medium Text"
+			android:textSize="@dimen/text_size_medium"
+			/>
+
 	</LinearLayout>
 
 </LinearLayout>
