@@ -6,6 +6,7 @@
         android:id="@+id/action_lexicon"
         android:orderInCategory="11"
         android:showAsAction="always"
+        android:icon="@drawable/menu_lexicon"
         android:title="@string/lexicon"/>
 	
 	

@@ -24,6 +24,8 @@ import com.alexmochalov.dic.*;
 import com.alexmochalov.files.*;
 import com.alexmochalov.infoPager.Information;
 import com.alexmochalov.infoPager.SamplePagerAdapter;
+import com.alexmochalov.lexicon.DialogLexicon;
+import com.alexmochalov.lexicon.Lexicon;
 import com.alexmochalov.slovotyk.R;
 import com.alexmochalov.url.*;
 import com.alexmochalov.url.DialogURL.*;
@@ -59,9 +61,6 @@ public class MainActivity extends Activity  implements OnInitListener
 	static final String INTERNAL_DICT = "INT_DICT";
 	static final String INIT_PATH = "INIT_PATH";
 	static final String INSTANT_TRANSLATION = "INSTANT_TRANSLATION";
-
-	int pageIndex = 0; // Индекс текущей страницы
-	int prevPageIndex = 0; // Индекс предидущей страницы (для возврата)
 
 	ViewTextSelectable viewTextSelectable;
 	EntryEditor entryEditor = new EntryEditor(); 
@@ -104,6 +103,7 @@ public class MainActivity extends Activity  implements OnInitListener
 		//setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		
 		// Настройка объекта Lexicon
+        /*
 		Lexicon.mCallback = new Lexicon.EventCallback(){
 
 			
@@ -114,6 +114,8 @@ public class MainActivity extends Activity  implements OnInitListener
 				prevPageIndex = 1;
 				entryEditor.start(entry);
 				}};
+		*/
+				
 		Lexicon.setParams(this);
 				
 		selectPage(0);
@@ -167,7 +169,6 @@ public class MainActivity extends Activity  implements OnInitListener
 				
 				Utils.saveViewParams(prefs.getInt(PREFS_FIRST_LINE, 0), 999);
 			} else{
-				pageIndex = 3;
 				Information.showInformation(this);
 			}	
 	    }
@@ -184,10 +185,7 @@ public class MainActivity extends Activity  implements OnInitListener
 					
 					entryEditor.reset();
 					
-					if (pageIndex > 0)
-						Utils.setActionbarTitle(Utils.getaLanguage(),
-							Utils.getDictionaryFileName(), true);
-					else Utils.setActionbarTitle(Utils.getaLanguage(),
+					Utils.setActionbarTitle(Utils.getaLanguage(),
 												 Utils.extractFileName(), false);
 				} else {
 					// If Index file not found show the message
@@ -263,6 +261,45 @@ public class MainActivity extends Activity  implements OnInitListener
      * @param page - номер страницы, которую надо выбрать 
      */
 	 void selectPage(int page){
+
+			getActionBar().show();
+			setContentView(R.layout.activity_main);
+	    	int upId = Resources.getSystem().getIdentifier("up", "id", "android");
+	    	if (upId > 0) {
+	    	    ImageView up = (ImageView) findViewById(upId);
+	    	   // up.setImageResource(R.drawable.logo);
+	    	}    	
+			Utils.setActionbarTitle(Utils.getaLanguage(),
+				Utils.extractFileName(), false);
+			//Utils.setActionbarTitle("");
+			
+			viewTextSelectable = (ViewTextSelectable)findViewById(R.id.viewTextSelectable);
+			
+	//		 android:screenOrientation="nosensor" 
+	//		 android:configChanges="keyboardHidden|orientation" 
+			SeekBarVertical seekBarVertical = (SeekBarVertical)findViewById(R.id.SeekBarVertical);
+			//TextView textView = (TextView)findViewById(R.id.textView);
+			
+			int size = getResources().getDimensionPixelSize(R.dimen.text_size_medium);
+			
+			viewTextSelectable.setParams(this, strings, seekBarVertical, size, this);
+			
+			Utils.restoreViewParams(viewTextSelectable);
+			
+			if (optionsMenu != null){
+				optionsMenu.findItem(R.id.action_add_del_bookmark).setVisible(true);
+				optionsMenu.findItem(R.id.action_bookmark).setVisible(true);
+				optionsMenu.findItem(R.id.action_clear).setVisible(true);
+				optionsMenu.findItem(R.id.action_save).setVisible(true);
+				
+				optionsMenu.findItem(R.id.action_refresh).setVisible(false);
+				
+				optionsMenu.findItem(R.id.action_select_dictionary).setVisible(false);
+				optionsMenu.findItem(R.id.internal_dictionary).setVisible(false);
+				
+			}
+		 
+		 /*
 		if (pageIndex == 0)
 			Utils.saveViewParams(viewTextSelectable);
 		else if (pageIndex == 1)
@@ -322,12 +359,6 @@ public class MainActivity extends Activity  implements OnInitListener
 			
 			Utils.setActionbarTitle(Utils.getaLanguage(),
 				Utils.getDictionaryFileName(), true);
-	    	/*int upId = Resources.getSystem().getIdentifier("up", "id", "android");
-	    	if (upId > 0) {
-	    	    ImageView up = (ImageView) findViewById(upId);
-	    	    up.setImageResource(R.drawable.up);
-	    	}  
-	    	*/
 			Utils.restoreViewParams();
 		} else if (page == 2){
 			setContentView(R.layout.dictionary_entry);
@@ -346,14 +377,9 @@ public class MainActivity extends Activity  implements OnInitListener
 			
 			Utils.setActionbarTitle(Utils.getaLanguage(),
 				Utils.getDictionaryFileName(), true);
-			/*
-	    	int upId = Resources.getSystem().getIdentifier("up", "id", "android");
-	    	if (upId > 0) {
-	    	    ImageView up = (ImageView) findViewById(upId);
-	    	    up.setImageResource(R.drawable.up);
-	    	}    	
-	    	*/
 		}
+		
+		*/
     }
 
      void setMenuItemsVisibility(int min, int max) {
@@ -425,13 +451,6 @@ public class MainActivity extends Activity  implements OnInitListener
 
 		switch (itemId) { 
 			case android.R.id.home:
-				if (pageIndex == 0)
-					selectPage(1);
-				else 
-					if (prevPageIndex == 1)
-						selectPage(1);
-					else selectPage(0);
-				prevPageIndex = 0;				
 				break;
 			case R.id.action_open:
 				dialogSaveFile(false, false);
@@ -457,12 +476,10 @@ public class MainActivity extends Activity  implements OnInitListener
 		        final CheckBox checkBoxSelections = (CheckBox)clearView.findViewById(R.id.checkBoxSelections);
 		        final CheckBox checkBoxBookmarks = (CheckBox)clearView.findViewById(R.id.checkBoxBookmarks);
 		        final CheckBox checkBoxLexicon = (CheckBox)clearView.findViewById(R.id.checkBoxLexicon);
-		        if (pageIndex == 0){
-		        	checkBoxSelections.setChecked(true);
-		        	checkBoxBookmarks.setChecked(true);
-		        	checkBoxLexicon.setChecked(true);
-		        } else
-		        	checkBoxLexicon.setChecked(true);
+
+		        checkBoxSelections.setChecked(true);
+		        checkBoxBookmarks.setChecked(true);
+		        checkBoxLexicon.setChecked(true);
 		        
 		        alert.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() { 
 		        public void onClick(DialogInterface dialog, int whichButton) { 
@@ -543,12 +560,15 @@ public class MainActivity extends Activity  implements OnInitListener
 					Dictionary.load(dictionary_name);
 				}
 				break;
-			case R.id.information:
-				//TextView textView = (TextView)findViewById(R.id.textView);
-				
-				pageIndex = 3;
-				Information.showInformation(this);
+			case R.id.action_lexicon:
+				DialogLexicon dialogLexicon = new DialogLexicon(this);
+				dialogLexicon.show();
 				break;
+			case R.id.information:
+			//TextView textView = (TextView)findViewById(R.id.textView);
+			
+			Information.showInformation(this);
+			break;
 			case R.id.action_instant:
 				Utils.instant_translation = !Utils.instant_translation;
 				item_instant.setChecked(Utils.instant_translation);
@@ -783,14 +803,7 @@ public class MainActivity extends Activity  implements OnInitListener
 
 	@Override
 	public void onBackPressed() {
-		if (pageIndex == 3)
-			selectPage(0);
-		else if (pageIndex > 0)
-			if (prevPageIndex == 1)
-				selectPage(1);
-			else selectPage(0);
-		else dialogSaveFile(true, false);
-		prevPageIndex = 0;				
+		dialogSaveFile(true, false);
 	}	 
 
 	

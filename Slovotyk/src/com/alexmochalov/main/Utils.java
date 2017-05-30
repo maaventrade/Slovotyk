@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.alexmochalov.lexicon.Lexicon;
 import com.alexmochalov.slovotyk.R;
 import com.alexmochalov.viewText.ViewTextSelectable;
 
