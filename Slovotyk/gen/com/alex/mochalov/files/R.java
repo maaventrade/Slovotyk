@@ -52,9 +52,9 @@ public final class R {
 		public static final int weekofday = 0x7f0b0028;
 	}
 	public static final class layout {
-		public static final int m12 = 0x7f03000b;
-		public static final int raw = 0x7f03000f;
-		public static final int selectfile = 0x7f030011;
+		public static final int m12 = 0x7f03000c;
+		public static final int raw = 0x7f030010;
+		public static final int selectfile = 0x7f030012;
 	}
 	public static final class menu {
 		public static final int main = 0x7f0a0000;

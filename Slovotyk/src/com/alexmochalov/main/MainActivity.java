@@ -22,7 +22,7 @@ import android.widget.RadioGroup.*;
 import com.alexmochalov.bmk.*;
 import com.alexmochalov.dic.*;
 import com.alexmochalov.files.*;
-import com.alexmochalov.infoPager.Information;
+import com.alexmochalov.infoPager.DialogInformation;
 import com.alexmochalov.infoPager.SamplePagerAdapter;
 import com.alexmochalov.lexicon.DialogLexicon;
 import com.alexmochalov.lexicon.Lexicon;
@@ -169,7 +169,7 @@ public class MainActivity extends Activity  implements OnInitListener
 				
 				Utils.saveViewParams(prefs.getInt(PREFS_FIRST_LINE, 0), 999);
 			} else{
-				Information.showInformation(this);
+				showInformation();	
 			}	
 	    }
 		
@@ -565,10 +565,8 @@ public class MainActivity extends Activity  implements OnInitListener
 				dialogLexicon.show();
 				break;
 			case R.id.information:
-			//TextView textView = (TextView)findViewById(R.id.textView);
-			
-			Information.showInformation(this);
-			break;
+				showInformation();
+				break;
 			case R.id.action_instant:
 				Utils.instant_translation = !Utils.instant_translation;
 				item_instant.setChecked(Utils.instant_translation);
@@ -592,7 +590,20 @@ public class MainActivity extends Activity  implements OnInitListener
   		return true;
 	}
 
-	 void dialogBookmarks() {
+	 private void showInformation() {
+		DialogInformation dialogInformation = new DialogInformation(this);
+		dialogInformation.listener = new DialogInformation.OnEventListener() {
+			@Override
+			public void onButtonLoadFile(String fileName, boolean fromRresource) {
+
+				loadFile(fileName, fromRresource);
+				
+			}
+		};
+		dialogInformation.show();
+	}
+
+	void dialogBookmarks() {
 		if (longOperation()) return; 
 			
 		if (viewTextSelectable.getBookmarks().size() == 0){

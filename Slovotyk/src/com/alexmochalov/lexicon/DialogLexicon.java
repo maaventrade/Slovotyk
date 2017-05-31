@@ -42,13 +42,13 @@ public class DialogLexicon extends Dialog{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		//getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
-        //        WindowManager.LayoutParams.MATCH_PARENT);		
-		
 		//requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.setTitle("Temp dictionary");
 		
 		setContentView(R.layout.dialog_lexicon);
+
+		getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT);		
 		
 		//ListView listView = (ListView)findViewById(R.id.bookmarks);
 		
