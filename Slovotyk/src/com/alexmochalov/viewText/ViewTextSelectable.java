@@ -50,9 +50,11 @@ import android.app.*;
 public final class ViewTextSelectable extends TextView {
 	//OnEventListener listener;
 
-	// Copies:  
-	// Copy of the loaded text.
-	private ArrayList<String> strings;
+	// Strings of the loaded text.
+	private ArrayList<String> strings = new ArrayList<String>();
+	private ArrayList<Page> pages = new ArrayList<Page>();
+	
+	
 	// Main activity 
 	private Context context;
 	private Activity mActivity;
@@ -67,8 +69,11 @@ public final class ViewTextSelectable extends TextView {
 	// Colors and stiles
 	private  Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	private  Paint paintMarkBG = new Paint(Paint.ANTI_ALIAS_FLAG);
-	// Width of the screen
-	private int width;
+
+	// Width and height of the screen
+	private int mWidth;
+	private int mHeight;
+	
 	// Height of strings = paint.getTextSize() 
 	private int heightOfString;
 	// Default text height 
@@ -188,8 +193,8 @@ public final class ViewTextSelectable extends TextView {
 		paint.setStrokeWidth(1);
 		
 		heightOfString = (int) paint.getTextSize()+((int)paint.getTextSize()>>1);
-
-		firstLinePixelShiftMax = heightOfString+heightOfString/2;
+		
+		firstLinePixelShiftMax = heightOfString + (heightOfString>>1);
 		firstLinePixelShift = firstLinePixelShiftMax;
 	}
 	
@@ -200,7 +205,7 @@ public final class ViewTextSelectable extends TextView {
 	 * @param strings
 	 * @param seekBarVertical
 	 */
-	public void setParams(Context context, ArrayList<String> strings, SeekBarVertical seekBarVertical, int textSize, Activity activity) {
+	public void setParams(Context context, SeekBarVertical seekBarVertical, int textSize, Activity activity) {
 		this.context = context;
 		mActivity = activity;
 		this.strings = strings;
@@ -698,7 +703,8 @@ Log.d("","X = "+event.getRawX());
 	}
 
 	public void loadFile(int width, String fileName, boolean fromRresource) {
-		this.width = width;
+		mWidth = width;
+		
 		final ArrayList<String> strs = new ArrayList<String>(); 
 
 		AsynkLoader asynkLoader = new AsynkLoader(context, mActivity);
@@ -712,7 +718,8 @@ Log.d("","X = "+event.getRawX());
 	}	
 
 	public void loadURL(int width, String fileName, String name) {
-		this.width = width;
+		mWidth = width;
+		
 		final ArrayList<String> strs = new ArrayList<String>(); 
 
 		AsynkLoader asynkLoader = new AsynkLoader(context, mActivity);
@@ -736,7 +743,7 @@ Log.d("","X = "+event.getRawX());
 					seekBarVertical.setProgress(firstLine);
 				invalidate();
 			}};
-			asynkDivider.start(strs, strings, width, paint, context);
+			asynkDivider.start(strs, strings, pages, mWidth, mHeight, paint, context);
 	}
 	
 	public void progressDialogHide() {
@@ -933,7 +940,7 @@ Log.d("","X = "+event.getRawX());
 	}
 
 	public void loadString(int width, String sharedText) {
-		this.width = width;
+		mWidth = width;
 		
 		String lines[] = sharedText.split("\\r?\\n");
 		final ArrayList<String> strs = new ArrayList<String>(Arrays.asList(lines));
@@ -941,5 +948,11 @@ Log.d("","X = "+event.getRawX());
 		divideFile(strs);
 	}
 
-	
+	@Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+        if (changed){
+        	Log.d("z","linesCount---- "+ getHeight()/(heightOfString + (heightOfString>>1))+" strings "+strings.size());
+        }
+    }	
 }

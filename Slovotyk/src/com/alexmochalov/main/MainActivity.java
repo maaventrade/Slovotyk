@@ -65,7 +65,6 @@ public class MainActivity extends Activity  implements OnInitListener
 	ViewTextSelectable viewTextSelectable;
 	EntryEditor entryEditor = new EntryEditor(); 
 	
-	ArrayList<String> strings = new ArrayList<String>();
 	
 	String initPath = Utils.EXTERNAL_STORAGE_DIRECTORY;
 	static final String FILE_EXT[] = {".txt",".xml",".htm",".html",".fb2"};
@@ -282,7 +281,7 @@ public class MainActivity extends Activity  implements OnInitListener
 			
 			int size = getResources().getDimensionPixelSize(R.dimen.text_size_medium);
 			
-			viewTextSelectable.setParams(this, strings, seekBarVertical, size, this);
+			viewTextSelectable.setParams(this, seekBarVertical, size, this);
 			
 			Utils.restoreViewParams(viewTextSelectable);
 			

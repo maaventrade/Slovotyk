@@ -3,6 +3,7 @@ package com.alexmochalov.io;
 import java.util.ArrayList;
 
 import com.alexmochalov.main.Utils;
+import com.alexmochalov.viewText.Page;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -23,13 +24,19 @@ public class AsynkDivider
 	// Progress bar slows down the procedure
 	//
 	private MyTaskDividing myTaskDividing;
+	
 	// Width of the screen
-	private int width;
+	private int mWidth;
+	private int mHeight;
+	
 	// Paint object is used for getting characters size. 
 	private Paint paint;
 	// Copy of the source and destination string arrays
 	private ArrayList<String> source;
 	private ArrayList<String> dest;
+
+	private ArrayList<Page> mPages;
+	
 	// This method is called when procedure finished.
 	public EventCallback eventCallback;
 	
@@ -47,11 +54,20 @@ public class AsynkDivider
 	 * @param width - width of the screen
 	 * @param paint - Point object of the screen
 	 */
-	public void start(ArrayList<String> source, ArrayList<String> dest, int width, Paint paint, Context context){
+	public void start(ArrayList<String> source, ArrayList<String> dest, ArrayList<Page> pages, 
+				int width, int height, Paint paint, Context context){
+		
+		
 		dest.clear();
+		pages.clear();
+		
 		this.source = source;
 	 	this.dest = dest;
-		this.width = width;
+	 	mPages = pages;
+		
+	 	mWidth = width;
+	 	mHeight = height;
+		
 		this.paint = paint;
 		this.context = context;
 
@@ -126,7 +142,12 @@ public class AsynkDivider
 		 */
 		private void divide()
 		{
+
+			mPages.add(new Page(0,0));
+
+			int heightOfString = (int) paint.getTextSize()+((int)paint.getTextSize()>>1);
 			float x = Utils.PARAG;
+			
 			// Repeat for every source string
 			int n = 0;
 			for (String string: source){
@@ -140,7 +161,7 @@ public class AsynkDivider
 				x = Utils.PARAG;
 				int index = 0;
 				// Find first blank
-				int blank = Utils.findBlank(paint, width, index, x, S);
+				int blank = Utils.findBlank(paint, mWidth, index, x, S);
 				char tab = Utils.CHAR_TAB;
 				// Repeat for every symbol of the string
 				while (index < S.length()){
@@ -156,7 +177,7 @@ public class AsynkDivider
 					} else {
 						// Add width of the current symbol to width of the screen 
 						x = x + paint.measureText(""+c);
-						if (x >= width - Utils.XGAP- Utils.XGAP
+						if (x >= mWidth - Utils.XGAP- Utils.XGAP
 							|| index == blank)
 						{
 							// Add to the string
@@ -167,7 +188,7 @@ public class AsynkDivider
 							tab = 0;
 							x = Utils.XGAP;
 							// Find next blank
-							blank = Utils.findBlank(paint, width, index+1, x, S);
+							blank = Utils.findBlank(paint, mWidth, index+1, x, S);
 							start = index+1;
 						}
 					}
@@ -184,4 +205,5 @@ public class AsynkDivider
 			}
 		}
 	}
+
 }
